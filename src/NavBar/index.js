@@ -16,7 +16,13 @@ function Center() {
   );
 }
 function Left() {
-  return <div className={"section left"}>profile</div>;
+  return (
+    <div className={"section left"}>
+      <img src="profile.jpg" alt="Profile" class="profile-pic" />
+      <span class="profile-name">John Doe</span>
+      <i className="fa-solid fa-right-from-bracket"></i>
+    </div>
+  );
 }
 function Rigth() {
   return <div className={"section rigth"}>options</div>;

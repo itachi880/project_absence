@@ -26,7 +26,16 @@
 
 .nav_bar .left {
   justify-content: start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .nav_bar .rigth {
   justify-content: end;
+}
+.nav_bar .left img {
+  width: 40px;
+  background-color: black;
+  border-radius: 50%;
+  height: 40px;
 }
