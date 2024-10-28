@@ -1,5 +1,5 @@
 .nav_bar {
-  height: 50px;
+  height: 60px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -26,16 +26,40 @@
 
 .nav_bar .left {
   justify-content: start;
+  color: var(#000);
+}
+.nav_bar .left .container {
   display: flex;
   align-items: center;
   gap: 10px;
+  text-transform: capitalize;
+  padding: 3px 20px 3px 3px;
+  background-color: var(--primary-white);
+  border-radius: 30px;
+  cursor: pointer;
 }
+
 .nav_bar .rigth {
   justify-content: end;
 }
 .nav_bar .left img {
-  width: 40px;
+  width: 35px;
   background-color: black;
   border-radius: 50%;
-  height: 40px;
+  height: 35px;
+}
+
+.nav_bar .left i {
+  color: var(--error-color);
+  padding: 5px;
+  border-radius: 3px;
+}
+.nav_bar .left i:hover {
+  color: #fff;
+  background-color: var(--error-color);
+}
+.nav_bar .left .profile {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }

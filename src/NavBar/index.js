@@ -1,5 +1,13 @@
+import { getServerLink, userDataStore } from "../data";
 import "./index.css";
 export default function () {
+  const [userData, setUserData] = userDataStore.useStore();
+  if (!userData.token)
+    return (
+      <nav className={"nav_bar"}>
+        <Center />
+      </nav>
+    );
   return (
     <nav className={"nav_bar"}>
       <Left />
@@ -11,16 +19,28 @@ export default function () {
 function Center() {
   return (
     <div className="section center">
-      <img className={"platform_logo"} src="https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/no-profile-picture-icon.png" />
+      <img className={"platform_logo"} alt="platform logo (ofppt)" src={require("../assets/no-profile-picture-icon.webp")} />
     </div>
   );
 }
 function Left() {
+  const [userData, setUserData] = userDataStore.useStore();
+
   return (
     <div className={"section left"}>
-      <img src="profile.jpg" alt="Profile" class="profile-pic" />
-      <span class="profile-name">John Doe</span>
-      <i className="fa-solid fa-right-from-bracket"></i>
+      <div className="container">
+        <span className="profile">
+          <img src={userData.data.profile ? getServerLink("profile_image/" + userData.data.profile) : require("../assets/no-profile-picture-icon.webp")} alt="Profile" />
+          <span className="profile-name">{userData.data.first_name + " " + userData.data.last_name}</span>
+        </span>
+        <i
+          className="fa-solid fa-right-from-bracket"
+          title="LOG OUT"
+          onClick={() => {
+            setUserData({});
+          }}
+        ></i>
+      </div>
     </div>
   );
 }

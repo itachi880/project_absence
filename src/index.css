@@ -1,21 +1,38 @@
-:root {
+/* :root {
   --background-gray-light: #f8f8f8;
-  --primary-bleu: #002aff;
+  --primary-bleu: #5f88db;
   --primary-white: #fff;
-  --secondary-bleu: #6a71ff;
-  --nav-black-shadow: #747474;
+  --secondary-bleu: #9fb0dd;
+  --nav-black-shadow: #9f9f9f;
+  --error-color: #b73e32;
+  --correct-color: #a9c8c1;
+} */
+:root {
+  --background-gray-light: #fafafa;
+  --primary-bleu: #5f88db; /* Blue for the profile section */
+  --primary-white: #fff; /* White text color */
+  --secondary-bleu: #9fb0dd; /* Secondary blue color */
+  --nav-black-shadow: #9f9f9f; /* Shadow color */
+  --error-color: #b73e32; /* Color for the logout icon */
+  --correct-color: #a9c8c1; /* Correct color */
 }
 * {
   box-sizing: border-box;
   text-align: center;
   margin: 0;
   padding: 0;
+  transition: all 0.1s ease-in-out;
+}
+*::selection {
+  background-color: var(--primary-bleu);
+  color: #fff;
 }
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-gray-light);
 }
 
 code {
