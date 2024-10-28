@@ -1,7 +1,7 @@
 import { getServerLink, userDataStore } from "../data";
 import "./index.css";
 export default function () {
-  const [userData, setUserData] = userDataStore.useStore();
+  const [userData, _] = userDataStore.useStore();
   if (!userData.token)
     return (
       <nav className={"nav_bar"}>
