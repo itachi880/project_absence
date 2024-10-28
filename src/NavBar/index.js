@@ -19,7 +19,7 @@ export default function () {
 function Center() {
   return (
     <div className="section center">
-      <img className={"platform_logo"} alt="platform logo (ofppt)" src={require("../assets/no-profile-picture-icon.webp")} />
+      <img className={"platform_logo"} alt="platform logo (ofppt)" src={require("../assets/ofppt.png")} />
     </div>
   );
 }
