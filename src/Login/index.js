@@ -1,5 +1,8 @@
 import { useRef, useState } from "react";
 import "./index.css";
+import { login } from "../api";
+import { userDataStore } from "../data";
+
 export default function () {
   const [formData, setFormData] = useState({
     login: "",
@@ -8,10 +11,15 @@ export default function () {
   const [passwordVisible, setPassVisibility] = useState(false);
   const inputsControle = {
     password: useRef(""),
+    error_message_info: useRef(""),
   };
+  const [userData, setUserData] = userDataStore.useStore();
   return (
     <div className="login">
-      <h1>Sign in</h1>
+      <div>
+        <span className="error" ref={inputsControle.error_message_info}></span>
+        <h1>Sign in</h1>
+      </div>
       <div className="form">
         <div className="input">
           <span className={`input-titel ${formData.login.trim().length > 0 ? "input-full" : ""}`}>Email</span>
@@ -48,8 +56,13 @@ export default function () {
         </div>
         <input
           type="submit"
-          onClick={() => {
-            console.log(formData);
+          onClick={async () => {
+            const [error, data] = await login(formData.login, formData.password);
+            if (error) {
+              inputsControle.error_message_info.current.innerHTML = error.response.data.message || error.message;
+              return;
+            }
+            setUserData(data);
           }}
           value="sign in"
         />
