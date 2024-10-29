@@ -9,6 +9,11 @@
   width: 20rem;
   font-size: 1.1rem;
 }
+.login .error {
+  color: var(--error-color);
+  font-size: 0.8rem;
+  font-weight: bold;
+}
 .login h1 {
   width: 100%;
   text-align: start;
