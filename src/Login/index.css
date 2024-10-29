@@ -1,0 +1,59 @@
+.login {
+  background-color: var(--primary-white);
+  box-shadow: 0 0 10px 0px var(--nav-black-shadow);
+  border-radius: 5px;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+.login h1 {
+  width: 100%;
+  text-align: start;
+}
+.login .form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+}
+.login .form .input {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  align-items: center;
+  border-radius: 2px;
+  border: 1px solid rgb(64, 64, 64);
+}
+.login .form .input input {
+  padding: 10px 20px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+.login .form .input span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px 2px 10px;
+  color: var(--primary-bleu);
+}
+.login .form input[type="submit"] {
+  color: var(--primary-white);
+  background-color: var(--primary-bleu);
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+  padding: 10px 40px;
+  text-transform: capitalize;
+}
+
+.login .form .options span {
+  color: var(--primary-bleu);
+}
+.login span,
+.login input[type="submit"] {
+  cursor: pointer;
+}
