@@ -5,7 +5,9 @@
   padding: 10px 15px;
   display: flex;
   flex-direction: column;
-  width: 20%;
+  gap: 30px;
+  width: 20rem;
+  font-size: 1.1rem;
 }
 .login h1 {
   width: 100%;
@@ -16,22 +18,44 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 10px;
+  gap: 20px;
 }
 .login .form .input {
   width: 100%;
+  position: relative;
   display: flex;
   justify-content: space-between;
   background-color: white;
-  align-items: center;
   border-radius: 2px;
   border: 1px solid rgb(64, 64, 64);
 }
+.login .form .input:focus-within {
+  border: 1px solid var(--primary-bleu);
+  outline: 2px solid var(--primary-bleu);
+}
 .login .form .input input {
-  padding: 10px 20px;
+  padding: 15px 20px;
+  width: 100%;
   background-color: transparent;
   outline: none;
   border: none;
+  text-align: start;
+  font-size: 1rem;
+}
+.login .form .input.password input {
+  width: 80%;
+}
+.login .form .input .input-titel {
+  position: absolute;
+  top: 25%;
+  left: 10px;
+  color: #000;
+  pointer-events: none;
+}
+.login .form .input:focus-within .input-titel,
+.login .form .input .input-titel.input-full {
+  top: 0;
+  font-size: 0.8rem;
 }
 .login .form .input span {
   display: flex;
@@ -44,13 +68,20 @@
   color: var(--primary-white);
   background-color: var(--primary-bleu);
   border: none;
-  border-radius: 20px;
+  border-radius: 40px;
   width: 100%;
-  padding: 10px 40px;
+  padding: 15px 40px;
   text-transform: capitalize;
+  border: 2px solid var(--primary-bleu);
+  font-weight: bold;
+}
+.login .form input[type="submit"]:hover {
+  color: var(--primary-bleu);
+  background-color: var(--primary-white);
 }
 
 .login .form .options span {
+  margin: 0 0 0 10px;
   color: var(--primary-bleu);
 }
 .login span,
