@@ -16,6 +16,7 @@ export default function () {
     password: useRef(""),
     error_message_info: useRef(""),
   };
+  const [userData, setUserData] = userDataStore.useStore();
   return (
     <div className="login">
       <div className="loading-bar" ref={loadingBarRef}></div>
