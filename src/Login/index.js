@@ -59,10 +59,10 @@ export default function () {
           onClick={async () => {
             const [error, data] = await login(formData.login, formData.password);
             if (error) {
-              inputsControle.error_message_info.current.innerHTML = error.response.data.message || error.message;
+              inputsControle.error_message_info.current.innerHTML = error.response?.data.message || error.message;
               return;
             }
-            setUserData(data);
+            setUserData({ ...data });
           }}
           value="sign in"
         />
