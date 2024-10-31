@@ -5,7 +5,7 @@ export default function () {
   if (!userData.token)
     return (
       <nav className={"nav_bar"}>
-        <Center />
+        <OfpptLogo />
       </nav>
     );
   return (
@@ -25,12 +25,12 @@ export default function () {
           ></i>
         </div>
       </div>
-      <Center />
+      <OfpptLogo />
       <div className={"section rigth"}>options</div>
     </nav>
   );
 }
-function Center() {
+function OfpptLogo() {
   return (
     <div className="section center">
       <img className={"platform_logo"} alt="platform logo (ofppt)" src={require("../assets/ofppt.png")} />

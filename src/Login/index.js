@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
 import "./index.css";
 import { login } from "../api";
-import { userDataStore } from "../data";
+import { jwt_token, userDataStore } from "../data";
+import { Store } from "react-data-stores";
 
 export default function () {
+  const [userData, setUserData] = userDataStore.useStore();
+
   const [formData, setFormData] = useState({
     login: "",
     password: "",
@@ -13,7 +16,6 @@ export default function () {
     password: useRef(""),
     error_message_info: useRef(""),
   };
-  const [userData, setUserData] = userDataStore.useStore();
   return (
     <div className="login">
       <div>
@@ -58,11 +60,11 @@ export default function () {
           type="submit"
           onClick={async () => {
             const [error, data] = await login(formData.login, formData.password);
-            if (error) {
-              inputsControle.error_message_info.current.innerHTML = error.response?.data.message || error.message;
-              return;
-            }
-            setUserData({ ...data });
+            if (error) return (inputsControle.error_message_info.current.innerHTML = error.response?.data.message || error.message);
+
+            setUserData(data);
+            localStorage.setItem(jwt_token, data.token);
+            Store.navigateTo("/");
           }}
           value="sign in"
         />
