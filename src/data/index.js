@@ -1,4 +1,5 @@
 import { createStore } from "react-data-stores";
+
 export const userDataStore = createStore({
   token: undefined,
   data: {
@@ -23,3 +24,4 @@ export const roles = {
   formateur: "FR",
   etudient: "student",
 };
+export const jwt_token = "jwt_token";
