@@ -15,6 +15,7 @@ export function BarChart({
       hidden: false,
     },
   ],
+  graph_titel = false,
   container_html_properties = {},
 }) {
   return (
@@ -35,10 +36,12 @@ export function BarChart({
         options={{
           responsive: true,
           plugins: {
-            title: {
-              display: true,
-              text: "Users Gained between 2016-2020",
-            },
+            title: graph_titel
+              ? {
+                  display: true,
+                  text: graph_titel,
+                }
+              : { display: false },
             legend: {
               display: true,
               position: "top",
