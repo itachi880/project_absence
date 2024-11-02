@@ -44,10 +44,8 @@ export default function () {
           />
           <span className={`input-titel ${formData.password.trim().length > 0 ? "input-full" : ""}`}>Password</span>
           <span
-            onClick={(e) => {
-              console.log(e.target.innerHTML.toLowerCase());
-              if (passwordVisible) return setPassVisibility(false);
-              setPassVisibility(true);
+            onClick={() => {
+              setPassVisibility(!passwordVisible);
             }}
           >
             {passwordVisible ? "Hide" : "Show"}
@@ -59,6 +57,7 @@ export default function () {
         <input
           type="submit"
           onClick={async () => {
+            if (formData.login.trim().length < 3 || formData.password.trim().length < 4) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required and password must contains minimum of 4 characters");
             const [error, data] = await login(formData.login, formData.password);
             if (error) return (inputsControle.error_message_info.current.innerHTML = error.response?.data.message || error.message);
 
