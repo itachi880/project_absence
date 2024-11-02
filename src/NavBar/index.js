@@ -13,7 +13,7 @@ export default function () {
       <div className={"section left"}>
         <div className="container">
           <span className="profile">
-            <img src={userData.data.profile ? getServerLink("profile_image/" + userData.data.profile) : require("../assets/no-profile-picture-icon.webp")} alt="Profile" />
+            <img src={userData.data.profile ? getServerLink("profile/" + userData.data.profile) : require("../assets/no-profile-picture-icon.webp")} alt="Profile" />
             <span className="profile-name">{userData.data.first_name + " " + userData.data.last_name}</span>
           </span>
           <i
