@@ -1,7 +1,12 @@
-import { getServerLink, userDataStore } from "../data";
+import { getServerLink, roles, userDataStore } from "../data";
 import "./index.css";
 export default function () {
   const [userData, setUserData] = userDataStore.useStore();
+  const Options = {
+    [roles.etudient]: <StudentOptions />,
+    [roles.formateur]: <FROptions />,
+    [roles.generale_survience]: <GS_Options />,
+  };
   if (!userData.token)
     return (
       <nav className={"nav_bar"}>
@@ -26,7 +31,7 @@ export default function () {
         </div>
       </div>
       <OfpptLogo />
-      <div className={"section rigth"}>options</div>
+      {Options[userData.data.role]}
     </nav>
   );
 }
@@ -36,4 +41,20 @@ function OfpptLogo() {
       <img className={"platform_logo"} alt="platform logo (ofppt)" src={require("../assets/ofppt.png")} />
     </div>
   );
+}
+function GS_Options() {
+  const [userData, setUserData] = userDataStore.useStore();
+
+  return <div className={"section rigth"}></div>;
+}
+function StudentOptions() {
+  const [userData, setUserData] = userDataStore.useStore();
+
+  return <div className={"section rigth"}>studens</div>;
+}
+
+function FROptions() {
+  const [userData, setUserData] = userDataStore.useStore();
+
+  return <div className={"section rigth"}>fr</div>;
 }
