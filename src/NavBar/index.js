@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getServerLink, roles, userDataStore } from "../data";
 import "./index.css";
 export default function () {
@@ -5,7 +6,7 @@ export default function () {
   const Options = {
     [roles.etudient]: <StudentOptions />,
     [roles.formateur]: <FROptions />,
-    [roles.generale_survience]: <GS_Options />,
+    [roles.generale_survience]: <GSOptions />,
   };
   if (!userData.token)
     return (
@@ -42,10 +43,16 @@ function OfpptLogo() {
     </div>
   );
 }
-function GS_Options() {
+function GSOptions() {
   const [userData, setUserData] = userDataStore.useStore();
-
-  return <div className={"section rigth"}></div>;
+  const [notifications, setNotifications] = useState({ is_new: true, data: {} });
+  return (
+    <div className={"section rigth"}>
+      <i className="fas fa-users" title="groups"></i>
+      <i className="fas fa-user-plus" title="add student"></i>
+      <i className={`fa-solid fa-bell ${notifications.is_new ? "notifications" : ""}`} onClick={() => setNotifications({ ...notifications, is_new: !notifications.is_new })}></i>
+    </div>
+  );
 }
 function StudentOptions() {
   const [userData, setUserData] = userDataStore.useStore();
