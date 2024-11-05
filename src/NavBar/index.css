@@ -9,6 +9,7 @@
   top: 0;
   background-color: var(--background-gray-light);
   --nav-icons-color: #545454;
+  --pop-up-color: #dedede;
 }
 .nav_bar > * {
   padding: 5px 20px;
@@ -67,12 +68,14 @@
 .nav_bar .rigth {
   display: flex;
   gap: 15px;
+  position: relative;
 }
 
 .nav_bar .rigth i {
   color: var(--nav-icons-color);
   cursor: pointer;
   font-size: 1.1rem;
+  padding: 2px;
 }
 .nav_bar .rigth i:hover {
   color: var(--secondary-bleu);
@@ -90,4 +93,13 @@
   top: 0px;
   left: 60%;
   background-color: var(--primary-bleu);
+}
+
+.nav_bar .rigth .notification_pop_up {
+  position: absolute;
+  top: 70px;
+  background-color: var(--pop-up-color);
+  width: 90%;
+  height: 50vh;
+  border-radius: 5px;
 }

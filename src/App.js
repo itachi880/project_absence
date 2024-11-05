@@ -6,6 +6,7 @@ import { jwt_token, userDataStore } from "./data";
 import { useEffect } from "react";
 import { Store } from "react-data-stores";
 import { auth_token } from "./api";
+import UsersRoute from "./Routes/UsersRoute";
 
 function App() {
   Store.navigateTo = useNavigate();
@@ -87,7 +88,7 @@ function App() {
       /> */}
       <Routes>
         <Route element={<Login />} path="/login" />
-
+        <Route path="/users/*" element={<UsersRoute />} />
         <Route element={<>not found</>} path="/*" />
       </Routes>
     </div>
