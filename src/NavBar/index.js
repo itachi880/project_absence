@@ -56,5 +56,5 @@ function StudentOptions() {
 function FROptions() {
   const [userData, setUserData] = userDataStore.useStore();
 
-  return <div className={"section rigth"}>fr</div>;
+  return <div className={"section rigth"}>fr options</div>;
 }
