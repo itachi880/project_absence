@@ -100,6 +100,7 @@
   top: 70px;
   background-color: var(--pop-up-color);
   width: 90%;
+  min-width: 250px;
   height: 50vh;
   border-radius: 5px;
 }
