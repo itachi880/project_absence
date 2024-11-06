@@ -13,8 +13,10 @@
   --primary-white: #fff; /* White text color */
   --secondary-bleu: #9fb0dd; /* Secondary blue color */
   --nav-black-shadow: #9f9f9f; /* Shadow color */
-  --error-color: #b73e32; /* Color for the logout icon */
-  --correct-color: #a9c8c1; /* Correct color */
+  --error-color: #ff15009c; /* Color for the logout icon */
+  --error-color-background: #ff8c829c; /* Color for the logout icon */
+  --correct-color-background: #80ffe14d; /* Correct color */
+  --correct-color: #00ff99; /* Correct color */
 }
 * {
   box-sizing: border-box;
@@ -22,6 +24,7 @@
   margin: 0;
   padding: 0;
   transition: all 0.1s ease-in-out;
+  font-family: Arial, Helvetica, sans-serif;
 }
 *::selection {
   background-color: var(--primary-bleu);
@@ -29,9 +32,7 @@
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
   background-color: var(--background-gray-light);
 }
 * {

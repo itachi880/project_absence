@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getServerLink, roles, userDataStore } from "../data";
+import { getServerLink, jwt_token, roles, userDataStore } from "../data";
 import "./index.css";
 import { Store } from "react-data-stores";
 export default function () {
@@ -27,7 +27,8 @@ export default function () {
             className="fa-solid fa-right-from-bracket"
             title="LOG OUT"
             onClick={() => {
-              setUserData({});
+              setUserData({}, true);
+              localStorage.removeItem(jwt_token);
             }}
           ></i>
         </div>

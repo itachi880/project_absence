@@ -7,12 +7,15 @@ import { useEffect } from "react";
 import { Store } from "react-data-stores";
 import { auth_token } from "./api";
 import UsersRoute from "./Routes/UsersRoute";
+import GroupsRoute from "./Routes/GroupsRoute";
 
 function App() {
   Store.navigateTo = useNavigate();
   const [userData, setUserData] = userDataStore.useStore();
   async function checkUser_JWT_Localstorage() {
-    const [error, data] = await auth_token(localStorage.getItem("jwt_token"));
+    let [error, data] = [null, null];
+    if (!localStorage.getItem(jwt_token)) return [true, null];
+    [error, data] = await auth_token();
     if (error) return Store.navigateTo("/login");
     setUserData({ token: localStorage.getItem(jwt_token), data: data.data });
     Store.navigateTo("/");
@@ -88,6 +91,7 @@ function App() {
       /> */}
       <Routes>
         <Route element={<Login />} path="/login" />
+        <Route path="/groups/*" element={<GroupsRoute />} />
         <Route path="/users/*" element={<UsersRoute />} />
         <Route element={<>not found</>} path="/*" />
       </Routes>
