@@ -1,5 +1,4 @@
 import { createStore } from "react-data-stores";
-
 export const userDataStore = createStore({
   token: undefined,
   data: {
