@@ -15,6 +15,9 @@ export const userDataStore = createStore({
     profile: null,
   },
 });
+export const GroupsDataStore = createStore({
+  groups: [{ createdAt: undefined, is_deleted: "", name: "", study_year: 0, updatedAt: undefined, __v: 0, _id: "" }],
+});
 export const getServerLink = (path) => {
   return "http://localhost:5000/" + path;
 };

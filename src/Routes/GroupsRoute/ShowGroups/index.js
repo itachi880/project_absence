@@ -2,25 +2,26 @@ import "./index.css";
 import { TableByJson } from "../../../utils";
 import { useEffect, useState } from "react";
 import { getGroups } from "../../../api";
-import { userDataStore } from "../../../data";
+import { GroupsDataStore, userDataStore } from "../../../data";
 import { Store } from "react-data-stores";
 
 export default function () {
   const [userData, setUserData] = userDataStore.useStore();
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = GroupsDataStore.useStore();
   useEffect(() => {
     getGroups(userData.token, true).then((res) => {
       if (res[0]) return;
-      setGroups(res[1]);
+      setGroups({ groups: res[1] }, true);
     });
   }, []);
   return (
-    <div className="table_container" onClick={() => console.log(userData)}>
+    <div className="table_container">
       <TableByJson
         replace_column_names={{ is_deleted: "status", study_year: "study years" }}
-        data={groups.map((group) => ({
+        data={groups.groups.map((group) => ({
           ...group,
           is_deleted: !group.is_deleted ? <span className="true">active</span> : <span className="false">archive</span>,
+          study_year: group.study_year + "/" + (group.study_year + 1),
         }))}
         exclude={["updatedAt", "__v", "createdAt", "_id"]}
         dataTdsOnclick={(index, obj, event) => {
