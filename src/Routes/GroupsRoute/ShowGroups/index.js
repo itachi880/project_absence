@@ -2,13 +2,17 @@ import "./index.css";
 import { TableByJson } from "../../../utils";
 import { useEffect, useState } from "react";
 import { getGroups } from "../../../api";
-import { GroupsDataStore, userDataStore } from "../../../data";
+import { forbedenRoutesFor, GroupsDataStore, userDataStore } from "../../../data";
 import { Store } from "react-data-stores";
 
 export default function () {
   const [userData, setUserData] = userDataStore.useStore();
   const [groups, setGroups] = GroupsDataStore.useStore();
   useEffect(() => {
+    if (forbedenRoutesFor[userData.data.role].includes("/groups")) {
+      Store.navigateTo("/");
+      return;
+    }
     getGroups(userData.token, true).then((res) => {
       if (res[0]) return;
       setGroups({ groups: res[1] }, true);

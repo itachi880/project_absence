@@ -80,7 +80,8 @@ export function BarChart({
  * @returns {JSX.Element} - A JSX table element based on the provided JSON data.
  */
 export function TableByJson({ data = [], replace_column_names = {}, exclude = [], NoDataCompognent = () => <>no data</>, htmlProperties = { table: {}, thead: {}, tbody: {}, bodyTr: {}, headTr: {}, bodyTd: {}, headTd: {} }, dataTdsOnclick = (index, objectDataRow, event) => {} }) {
-  if (data.length <= 0) return <NoDataCompognent />;
+  if (data.length <= 0 || !Array.isArray(data)) return <NoDataCompognent />;
+
   const columns = Object.keys(data[0]).filter((column) => !exclude.includes(column));
   return (
     <table {...htmlProperties.table}>
