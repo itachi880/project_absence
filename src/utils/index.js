@@ -136,7 +136,7 @@ export const spans = {
     </span>
   ),
   maybe: ({ text }) => (
-    <span className="false" style={{ color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)" }}>
+    <span className="false" style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)" }}>
       {text}
     </span>
   ),

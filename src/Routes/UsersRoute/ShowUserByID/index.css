@@ -49,6 +49,15 @@
   border-radius: 5px !important;
   overflow: hidden;
 }
+.calander-container .react-calendar {
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.calander-container .react-calendar button {
+  border-radius: 5px !important;
+  overflow: hidden;
+}
 .day-data {
   background-color: white;
   width: 350px;
