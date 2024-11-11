@@ -15,7 +15,7 @@ function App() {
   async function checkUser_JWT_Localstorage() {
     let [error, data] = [null, null];
     if (!localStorage.getItem(jwt_token)) return [true, null];
-    [error, data] = await auth_token();
+    [error, data] = await auth_token(localStorage.getItem(jwt_token));
     if (error) return;
     setUserData({ token: localStorage.getItem(jwt_token), data: data.data });
   }
@@ -24,7 +24,8 @@ function App() {
   }, []);
   useEffect(() => {
     if (!userData.token) return Store.navigateTo("/login" + "?backLink=" + window.location.pathname);
-
+    const backLink = new URLSearchParams(window.location.search);
+    Store.navigateTo(backLink.get("backLink") || "/");
     // if (forbedenRoutesFor[userData.data.role].includes(window.location.pathname)) {
     //   Store.navigateTo("/");
     //   return;
