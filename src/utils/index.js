@@ -72,10 +72,10 @@ export function BarChart({
  * @param {React.DetailedHTMLProps<React.HTMLAttributes<HTMLTableRowElement>, HTMLTableRowElement>} [props.htmlProperties.headTr={}] - Properties for `<tr>` elements within `<thead>`.
  * @param {React.DetailedHTMLProps<React.TdHTMLAttributes<HTMLTableCellElement>, HTMLTableCellElement>} [props.htmlProperties.bodyTd={}] - Properties for `<td>` elements within `<tbody>`.
  * @param {React.DetailedHTMLProps<React.ThHTMLAttributes<HTMLTableCellElement>, HTMLTableCellElement>} [props.htmlProperties.headTd={}] - Properties for `<th>` elements within `<thead>`.
- * @param {function} [props.onCellClick=(index, row, event) => {}] - Callback function for cell click events, providing the cell index, the row data, and the event object.
- * @param {number} props.onCellClick.index - The index of the clicked cell within the row.
- * @param {Object} props.onCellClick.row - The row data for the clicked cell.
- * @param {React.MouseEvent} props.onCellClick.event - The click event.
+ * @param {function} [props.dataTdsOnclick=(index, row, event) => {}] - Callback function for cell click events, providing the cell index, the row data, and the event object.
+ * @param {number} props.dataTdsOnclick.index - The index of the clicked cell within the row.
+ * @param {Object} props.dataTdsOnclick.row - The row data for the clicked cell.
+ * @param {React.MouseEvent} props.dataTdsOnclick.event - The click event.
  *
  * @returns {JSX.Element} - A JSX table element based on the provided JSON data.
  */
@@ -110,6 +110,14 @@ export function TableByJson({ data = [], order = [], replace_column_names = {}, 
   );
 }
 export const spans = {
-  active: <span className="true">active</span>,
-  archive: <span className="true">archive</span>,
+  true: ({ text }) => (
+    <span className="true" style={{ color: " var(--correct-color)", borderColor: " var(--correct-color)", backgroundColor: " var(--correct-color-background)" }}>
+      {text}
+    </span>
+  ),
+  false: ({ text }) => (
+    <span className="false" style={{ color: " var(--error-color)", borderColor: " var(--error-color)", backgroundColor: " var(--error-color-background)" }}>
+      {text}
+    </span>
+  ),
 };

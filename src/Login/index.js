@@ -5,7 +5,7 @@ import { jwt_token, userDataStore } from "../data";
 import { Store } from "react-data-stores";
 
 export default function () {
-  const [userData, setUserData] = userDataStore.useStore();
+  const [_, setUserData] = userDataStore.useStore();
 
   const [formData, setFormData] = useState({
     login: "",
@@ -59,8 +59,7 @@ export default function () {
           onClick={async () => {
             if (formData.login.trim().length < 3 || formData.password.trim().length < 4) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required and password must contains minimum of 4 characters");
             const [error, data] = await login(formData.login, formData.password);
-            if (error) return (inputsControle.error_message_info.current.innerHTML = error.response?.data.message || error.message);
-
+            if (error) return (inputsControle.error_message_info.current.innerHTML = error.response?.data || error.message);
             setUserData(data);
             localStorage.setItem(jwt_token, data.token);
             Store.navigateTo("/");
