@@ -34,3 +34,28 @@
   font-size: x-large;
   color: #acf39d;
 }
+.user-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.user-card h4 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.user-card p {
+  font-size: 1em;
+  color: #666;
+  margin: 8px 0;
+}
+
+.user-card strong {
+  color: #333;
+}
