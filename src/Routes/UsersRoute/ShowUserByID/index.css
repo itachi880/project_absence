@@ -29,3 +29,8 @@
   width: 350px;
   border: 1px solid gray;
 }
+#no-absence {
+  text-align: center;
+  font-size: x-large;
+  color: #acf39d;
+}

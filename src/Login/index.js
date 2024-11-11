@@ -62,7 +62,8 @@ export default function () {
             if (error) return (inputsControle.error_message_info.current.innerHTML = error.response?.data || error.message);
             setUserData(data);
             localStorage.setItem(jwt_token, data.token);
-            Store.navigateTo("/");
+            const backLink = new URLSearchParams(window.location.search);
+            Store.navigateTo(backLink.get("backLink") || "/");
           }}
           value="sign in"
         />
