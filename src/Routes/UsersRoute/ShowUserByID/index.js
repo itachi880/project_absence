@@ -127,8 +127,8 @@ export default function MyCalendar() {
 const ShowUser = ({ studentsData, groups, group, id }) => {
   const d = studentsData[group].filter((student) => student._id == id)[0];
   return (
-    <>
-      <h4>donnees du stagaire</h4>
+    <div className="user-card">
+      <h4>Donnees du stagaire</h4>
       <p>
         <strong>Nom :</strong>
         {d.first_name + " " + d.last_name}
@@ -137,11 +137,17 @@ const ShowUser = ({ studentsData, groups, group, id }) => {
         <strong>Login :</strong> {d.login}
       </p>
       <p>
+        <strong>Cin :</strong> {d.cin}
+      </p>
+      <p>
+        <strong>Cin :</strong> {}
+      </p>
+      <p>
         <strong>Group :</strong>{" "}
         {groups.groups.filter((e) => {
           return e._id == group;
         })[0].name || "Aucun groupe"}
       </p>
-    </>
+    </div>
   );
 };
