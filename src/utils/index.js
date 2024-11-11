@@ -111,17 +111,17 @@ export function TableByJson({ data = [], order = [], replace_column_names = {}, 
 }
 export const spans = {
   true: ({ text }) => (
-    <span className="true" style={{ color: " var(--correct-color)", borderColor: " var(--correct-color)", backgroundColor: " var(--correct-color-background)" }}>
+    <span className="true" style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--correct-color)", borderColor: " var(--correct-color)", backgroundColor: " var(--correct-color-background)" }}>
       {text}
     </span>
   ),
   false: ({ text }) => (
-    <span className="false" style={{ color: " var(--error-color)", borderColor: " var(--error-color)", backgroundColor: " var(--error-color-background)" }}>
+    <span className="false" style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--error-color)", borderColor: " var(--error-color)", backgroundColor: " var(--error-color-background)" }}>
       {text}
     </span>
   ),
   maybe: ({ text }) => (
-    <span className="false" style={{ color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)" }}>
+    <span className="false" style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)" }}>
       {text}
     </span>
   ),

@@ -11,7 +11,7 @@ import { spans } from "../../../utils";
 export default function MyCalendar() {
   const date = new Date();
   const { id, group } = useParams(); //// id users
-  const [userData, setUserData] = userDataStore.useStore(); //
+  const [userData] = userDataStore.useStore(); //
   const [studentsData, setStudentsData] = studentsByGroup.useStore();
   const [datesToMark, setDatesToMarke] = useState([{ date: "", events: [] }]);
   const [datesToMarkCheck, setDatesToMarkeCheck] = useState([]);
@@ -30,9 +30,9 @@ export default function MyCalendar() {
         setGroups({ groups: [...groups.groups, data] });
       });
     }
-    const studentAbsence = studentsData[group]?.find((obj) => obj._id == id)?.absences || [];
+    const studentAbsence = studentsData[group]?.find((obj) => obj._id === id)?.absences || [];
     if (studentAbsence.length === 0) return;
-    if (absencesStore.data.fi) return;
+    if (absencesStore.data.fi) return; // to do ??
     getUserAbsenceByID(localStorage.getItem(jwt_token), studentAbsence[studentAbsence.length - 1]).then((res) => {
       if (res[0]) return console.log(res[0]);
       setAbsencesStore({ data: [res[1]] }, false);
@@ -76,7 +76,7 @@ export default function MyCalendar() {
 
           <Calendar
             tileContent={({ date, view }) => {
-              if (view != "month") return null;
+              if (view !== "month") return null;
               const formatedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
               if (!datesToMarkCheck.includes(formatedDate)) return null;
 
@@ -103,19 +103,19 @@ export default function MyCalendar() {
           <tbody>
             <tr>
               <td>8:30 AM - 10:30 AM</td>
-              <td>{datesToMark.find(({ date }) => selectedDate == date)?.events.includes(1) ? spans["false"]({ text: "Absent" }) : date.getTime() < selectedDateObj.getTime() ? spans["maybe"]({ text: "Pas Encore" }) : spans["true"]({ text: "Present" })}</td>
+              <td>{datesToMark.find(({ date }) => selectedDate === date)?.events.includes(1) ? spans["false"]({ text: "Absent" }) : date.getTime() < selectedDateObj.getTime() ? spans["maybe"]({ text: "Pas Encore" }) : spans["true"]({ text: "Present" })}</td>
             </tr>
             <tr>
               <td>10:30 AM - 1:00 PM</td>
-              <td>{datesToMark.find(({ date }) => selectedDate == date)?.events.includes(2) ? spans["false"]({ text: "Absent" }) : date.getTime() < selectedDateObj.getTime() ? spans["maybe"]({ text: "Pas Encore" }) : spans["true"]({ text: "Present" })}</td>
+              <td>{datesToMark.find(({ date }) => selectedDate === date)?.events.includes(2) ? spans["false"]({ text: "Absent" }) : date.getTime() < selectedDateObj.getTime() ? spans["maybe"]({ text: "Pas Encore" }) : spans["true"]({ text: "Present" })}</td>
             </tr>
             <tr>
               <td>1:30 PM - 4:30 PM</td>
-              <td>{datesToMark.find(({ date }) => selectedDate == date)?.events.includes(3) ? spans["false"]({ text: "Absent" }) : date.getTime() < selectedDateObj.getTime() ? spans["maybe"]({ text: "Pas Encore" }) : spans["true"]({ text: "Present" })}</td>
+              <td>{datesToMark.find(({ date }) => selectedDate === date)?.events.includes(3) ? spans["false"]({ text: "Absent" }) : date.getTime() < selectedDateObj.getTime() ? spans["maybe"]({ text: "Pas Encore" }) : spans["true"]({ text: "Present" })}</td>
             </tr>
             <tr>
               <td>4:30 PM - 6:30 PM</td>
-              <td>{datesToMark.find(({ date }) => selectedDate == date)?.events.includes(4) ? spans["false"]({ text: "Absent" }) : date.getTime() < selectedDateObj.getTime() ? spans["maybe"]({ text: "Pas Encore" }) : spans["true"]({ text: "Present" })}</td>
+              <td>{datesToMark.find(({ date }) => selectedDate === date)?.events.includes(4) ? spans["false"]({ text: "Absent" }) : date.getTime() < selectedDateObj.getTime() ? spans["maybe"]({ text: "Pas Encore" }) : spans["true"]({ text: "Present" })}</td>
             </tr>
           </tbody>
         </table>
@@ -125,29 +125,28 @@ export default function MyCalendar() {
 }
 
 const ShowUser = ({ studentsData, groups, group, id }) => {
-  const d = studentsData[group].filter((student) => student._id == id)[0];
+  const d = studentsData[group]?.filter((student) => student._id === id)[0];
+  if (!d) return <></>;
   return (
     <div className="user-card">
       <h4>Donnees du stagaire</h4>
-      <p>
-        <strong>Nom :</strong>
-        {d.first_name + " " + d.last_name}
-      </p>
+      <img width={"30px"} src={require("../../../assets/no-profile-picture-icon.webp")} />
+      <p>{d.first_name + " " + d.last_name}</p>
+      {(
+        <spans.true
+          text={
+            groups?.groups?.filter((e) => {
+              return e._id === group;
+            })[0]?.name
+          }
+        />
+      ) || <spans.false text={"Aucun groupe"} />}
+      <spans.maybe text={d.cin} />
       <p>
         <strong>Login :</strong> {d.login}
       </p>
-      <p>
-        <strong>Cin :</strong> {d.cin}
-      </p>
-      <p>
-        <strong>Cin :</strong> {}
-      </p>
-      <p>
-        <strong>Group :</strong>{" "}
-        {groups.groups.filter((e) => {
-          return e._id == group;
-        })[0].name || "Aucun groupe"}
-      </p>
+
+      <p></p>
     </div>
   );
 };
