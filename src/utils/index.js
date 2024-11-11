@@ -135,6 +135,11 @@ export const spans = {
       {text}
     </span>
   ),
+  maybe: ({ text }) => (
+    <span className="false" style={{ color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)" }}>
+      {text}
+    </span>
+  ),
 };
 
 export const PopUp = ({ removeOnClick = true, isLoading = true, timer = 3000, message = "Loading...", color = "var(--maybe-color)" }) => {
