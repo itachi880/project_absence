@@ -17,6 +17,8 @@
   --error-color-background: #ff8c829c; /* Color for the logout icon */
   --correct-color-background: #80ffe14d; /* Correct color */
   --correct-color: #00ff99; /* Correct color */
+  --maybe-color-background: #f4ff5a37; /* maybe color */
+  --maybe-color: #c6bc00; /* maybe color */
 }
 * {
   box-sizing: border-box;

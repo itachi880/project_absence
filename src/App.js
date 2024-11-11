@@ -16,15 +16,15 @@ function App() {
     let [error, data] = [null, null];
     if (!localStorage.getItem(jwt_token)) return [true, null];
     [error, data] = await auth_token();
-    if (error) return Store.navigateTo("/login");
+    if (error) return;
     setUserData({ token: localStorage.getItem(jwt_token), data: data.data });
-    Store.navigateTo("/");
   }
   useEffect(() => {
     checkUser_JWT_Localstorage();
   }, []);
   useEffect(() => {
-    if (!userData.token) Store.navigateTo("/login");
+    if (!userData.token) return Store.navigateTo("/login" + "?backLink=" + window.location.pathname);
+
     // if (forbedenRoutesFor[userData.data.role].includes(window.location.pathname)) {
     //   Store.navigateTo("/");
     //   return;
