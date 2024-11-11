@@ -35,6 +35,25 @@ export const studentsByGroup = createStore({
     },
   ],
 });
+export const absences = createStore({
+  data: [
+    {
+      _id: "",
+      student_id: "",
+      group: "", //group id
+      month: "", // Format: YYYY-MM
+      absences_justifiees: 0,
+      total_absences: 0,
+      absences: [
+        {
+          date: 1, //1-31
+          sessions: [], //[1,2,3,4]// session pare numero de 7issa
+          justification_id: "", // id de fichies imkn ikon null
+        },
+      ],
+    },
+  ],
+});
 export const getServerLink = (path) => {
   return "http://localhost:5000/" + path;
 };

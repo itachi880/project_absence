@@ -58,3 +58,22 @@ export const getUsersByGroupID = async (id, token) => {
     });
   return result;
 };
+export const getUserAbsenceByID = async (token, id) => {
+  const result = [null, null];
+
+  await axios
+    .get(getServerLink("absence/getByID"), {
+      params: {
+        token,
+        id,
+      },
+    })
+    .then((res) => {
+      result[1] = res.data;
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+
+  return result;
+};

@@ -25,6 +25,10 @@ function App() {
   }, []);
   useEffect(() => {
     if (!userData.token) Store.navigateTo("/login");
+    // if (forbedenRoutesFor[userData.data.role].includes(window.location.pathname)) {
+    //   Store.navigateTo("/");
+    //   return;
+    // }
   }, [userData]);
   return (
     <div className="App">

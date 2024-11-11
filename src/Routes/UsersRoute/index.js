@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { userDataStore } from "../../data";
 import ShowUsersByGroupID from "./ShowUsersByGroupID";
+import ShowUserByID from "./ShowUserByID";
 
 export default function () {
   const [userDataHere, setUserData1] = userDataStore.useStore();
@@ -15,6 +16,7 @@ export default function () {
         })()}
       />
       <Route path="/show/group/:id" element={<ShowUsersByGroupID />} />
+      <Route path="/show/:id/from/:group" element={<ShowUserByID />} />
     </Routes>
   );
 }

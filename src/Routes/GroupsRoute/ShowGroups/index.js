@@ -1,6 +1,6 @@
 import "./index.css";
 import { TableByJson } from "../../../utils";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getGroups } from "../../../api";
 import { forbedenRoutesFor, GroupsDataStore, userDataStore } from "../../../data";
 import { Store } from "react-data-stores";
@@ -15,6 +15,7 @@ export default function () {
     }
     getGroups(userData.token, true).then((res) => {
       if (res[0]) return;
+      console.log(res);
       setGroups({ groups: res[1] }, true);
     });
   }, []);
