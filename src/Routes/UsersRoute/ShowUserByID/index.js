@@ -62,7 +62,7 @@ export default function MyCalendar() {
     setDatesToMarkeCheck(dates);
     setDatesToMarke(events);
   }, [absencesStore]);
-  return <ShowUser groups={groups} studentsData={studentsData} group={group} id={id} />;
+  // return <ShowUser groups={groups} studentsData={studentsData} group={group} id={id} />;
 
   return (
     <>
@@ -127,7 +127,7 @@ export default function MyCalendar() {
 
 const ShowUser = ({ studentsData, groups, group, id }) => {
   const d = studentsData[group]?.filter((student) => student._id === id)[0];
-  if (!d) return <></>;
+  if (!d) return null;
   return (
     <div className="user-card">
       <div className="student-info">
