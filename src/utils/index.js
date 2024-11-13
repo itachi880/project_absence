@@ -1,4 +1,5 @@
 import { BarElement, CategoryScale, Chart, LinearScale, Title, Tooltip, Legend } from "chart.js";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -61,6 +62,7 @@ export function BarChart({
  *
  * @param {Object} props - The props for the component.
  * @param {Array<Object>} [props.data=[]] - The data to display in the table, where each object represents a row.
+ * @param {Array<string>} [props.order=[]] - The order of colmuns the default one is used if empty
  * @param {object} [props.replace_column_names={}] - An array of column names to exclude from the table.
  * @param {Array<string>} [props.exclude=[]] - An array of column names to exclude from the table.
  * @param {JSX.Element} [props.NoDataComponent=() => <>no data</>] - A component to render when there is no data.
@@ -82,7 +84,7 @@ export function BarChart({
 export function TableByJson({ data = [], order = [], replace_column_names = {}, exclude = [], NoDataCompognent = () => <>no data</>, htmlProperties = { table: {}, thead: {}, tbody: {}, bodyTr: {}, headTr: {}, bodyTd: {}, headTd: {} }, dataTdsOnclick = (index, objectDataRow, event) => {} }) {
   if (data.length <= 0 || !Array.isArray(data)) return <NoDataCompognent />;
 
-  const columns = Object.keys(data[0]).filter((column) => !exclude.includes(column));
+  const columns = [...new Set([...order, ...Object.keys(data[0]).filter((column) => !exclude.includes(column))]).values()];
   return (
     <table {...htmlProperties.table}>
       <thead {...htmlProperties.thead}>
@@ -125,4 +127,57 @@ export const spans = {
       {text}
     </span>
   ),
+};
+
+export const PopUp = ({ removeOnClick = true, isLoading = true, timer = 3000, message = "Loading...", color = "var(--maybe-color)" }) => {
+  const [isVisible, setIsVisible] = useState(isLoading);
+
+  useEffect(() => {
+    if (isLoading && timer > 0) {
+      const timeoutId = setTimeout(() => {
+        setIsVisible(false);
+      }, timer);
+
+      return () => clearTimeout(timeoutId);
+    }
+    if (!timer) setIsVisible(true);
+  }, [isLoading, timer]);
+  if (!isLoading || !isVisible) return null;
+
+  return (
+    <div
+      onClick={(e) => {
+        if (!removeOnClick) return;
+        setIsVisible(false);
+      }}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 1000,
+      }}
+    >
+      <div
+        style={{
+          background: "white",
+          color: color,
+          padding: "1em",
+          borderRadius: "5px",
+          minWidth: "300px",
+          textAlign: "center",
+          position: "relative",
+          fontWeight: "bold",
+          border: "1px solid " + color,
+        }}
+      >
+        {message}
+        <span style={{ position: "absolute", width: "100%", left: 0, background: color, height: "5px", top: "0" }}></span>
+      </div>
+    </div>
+  );
 };

@@ -16,7 +16,9 @@ export const userDataStore = createStore({
   },
 });
 export const GroupsDataStore = createStore({
-  groups: [{ createdAt: undefined, is_deleted: "", name: "", study_year: 0, updatedAt: undefined, __v: 0, _id: "" }],
+  groups: [
+    // { createdAt: undefined, is_deleted: "", name: "", study_year: 0, updatedAt: undefined, __v: 0, _id: "" }
+  ],
 });
 export const studentsByGroup = createStore({
   dev106: [
@@ -32,6 +34,7 @@ export const studentsByGroup = createStore({
       is_deleted: false,
       role: "",
       profile: null,
+      displine_points: 0,
     },
   ],
 });

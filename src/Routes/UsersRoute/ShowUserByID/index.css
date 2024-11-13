@@ -43,28 +43,107 @@
   font-size: x-large;
   color: #acf39d;
 }
+img {
+  width: 50px;
+}
 .user-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  background-color: white;
+  min-width: 300px;
   max-width: 400px;
-  margin: 20px auto;
-  text-align: left;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 8px 0px var(--nav-black-shadow);
+
+  justify-content: space-between;
+}
+.user-card .student-profile img {
+  width: 100%;
+}
+.user-card .student-profile {
+  width: 60px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid black;
+  overflow: hidden;
+}
+.user-card .student-info {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  align-items: center;
+  gap: 10px;
 }
 
-.user-card h4 {
-  font-size: 1.5em;
-  color: #333;
-  margin-bottom: 15px;
+.user-card .student-info .attrebuts {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  align-items: start;
+}
+.user-card .student-info .attrebuts div {
+  display: flex;
+  gap: 2px;
+}
+.user-card .student-info .attrebuts span {
+  font-size: 10px !important;
+  padding: 2px !important;
+  border-radius: 3px !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.user-card .student-data {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid gray;
+  padding: 1em 0;
+  flex-wrap: nowrap; /* Keep items in a single row */
 }
 
-.user-card p {
-  font-size: 1em;
-  color: #666;
-  margin: 8px 0;
+.user-card .student-data .section {
+  flex-grow: 1; /* Allow sections to grow equally */
+  text-align: center; /* Center content inside each section */
+  padding: 0.8em 1em;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin: 0 5px; /* Small margin between sections */
+  font-size: 0.9rem; /* Reduced font size for labels */
+  font-weight: normal; /* Lighter text weight */
+  word-wrap: break-word; /* Ensure text wraps in case of overflow */
 }
 
-.user-card strong {
-  color: #333;
+.user-card .student-data .section i {
+  margin-right: 0.4em; /* Reduced space between icon and text */
+  font-size: 1.2em; /* Slightly smaller icon size */
+}
+
+.user-card .icons-labels {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+.user-card .discipline {
+  color: var(--maybe-color); /* Gold */
+}
+
+.user-card .absence-unjustified {
+  color: var(--error-color); /* Red */
+}
+
+.user-card .absence-justified {
+  color: var(--correct-color); /* Green */
+}
+
+/* Hover effect */
+.user-card .student-data .section:hover {
+  background-color: #f8f8f8;
+  cursor: pointer;
 }

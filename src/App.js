@@ -34,6 +34,7 @@ function App() {
   return (
     <div className="App">
       <NavBar />
+
       {/* <BarChart
         container_html_properties={{ style: { width: "500px", hight: "100px" } }}
         data={[

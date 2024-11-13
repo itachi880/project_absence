@@ -12,7 +12,7 @@
   --primary-bleu: #5f88db; /* Blue for the profile section */
   --primary-white: #fff; /* White text color */
   --secondary-bleu: #9fb0dd; /* Secondary blue color */
-  --nav-black-shadow: #9f9f9f; /* Shadow color */
+  --nav-black-shadow: #9f9f9fc2; /* Shadow color */
   --error-color: #ff15009c; /* Color for the logout icon */
   --error-color-background: #ff8c829c; /* Color for the logout icon */
   --correct-color-background: #80ffe14d; /* Correct color */
