@@ -62,6 +62,7 @@ export default function MyCalendar() {
     setDatesToMarkeCheck(dates);
     setDatesToMarke(events);
   }, [absencesStore]);
+  return <ShowUser groups={groups} studentsData={studentsData} group={group} id={id} />;
 
   return (
     <>
@@ -129,24 +130,48 @@ const ShowUser = ({ studentsData, groups, group, id }) => {
   if (!d) return <></>;
   return (
     <div className="user-card">
-      <h4>Donnees du stagaire</h4>
-      <img width={"30px"} src={require("../../../assets/no-profile-picture-icon.webp")} />
-      <p>{d.first_name + " " + d.last_name}</p>
-      {(
-        <spans.true
-          text={
-            groups?.groups?.filter((e) => {
-              return e._id === group;
-            })[0]?.name
-          }
-        />
-      ) || <spans.false text={"Aucun groupe"} />}
-      <spans.maybe text={d.cin} />
-      <p>
-        <strong>Login :</strong> {d.login}
-      </p>
-
-      <p></p>
+      <div className="student-info">
+        <div className="student-profile">
+          <img src={require("../../../assets/no-profile-picture-icon.webp")} />
+        </div>{" "}
+        <div className="attrebuts">
+          {(d.first_name + " " + d.last_name).toLocaleUpperCase()}
+          <div>
+            <spans.true
+              text={
+                groups?.groups?.filter((e) => {
+                  return e._id === group;
+                })[0]?.name
+              }
+            />
+            <spans.maybe text={d.cin} />
+          </div>
+        </div>
+      </div>
+      <div className="icons-labels">
+        <span className="discipline">
+          <i className="fa-solid fa-star"></i>
+          Discipline
+        </span>
+        <span className="absence-unjustified">
+          <i className="fa-solid fa-circle-exclamation"></i>
+          Absence Unjustified
+        </span>
+        <span className="absence-justified">
+          <i className="fa-solid fa-circle-check"></i> Absence Justified
+        </span>
+      </div>
+      <div className="student-data">
+        <div className="section discipline">
+          <i className="fa-solid fa-star"></i> 20/20
+        </div>
+        <div className="section absence-unjustified">
+          <i className="fa-solid fa-circle-exclamation"></i> 0h
+        </div>
+        <div className="section absence-justified">
+          <i className="fa-solid fa-circle-check"></i> 0h
+        </div>
+      </div>
     </div>
   );
 };
