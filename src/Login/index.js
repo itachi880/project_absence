@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import "./index.css";
 import { login } from "../api";
 import { jwt_token, userDataStore } from "../data";
-import { Store } from "react-data-stores";
 
 export default function () {
   const [_, setUserData] = userDataStore.useStore();
@@ -11,6 +10,7 @@ export default function () {
     login: "",
     password: "",
   });
+  const loadingBarRef = useRef("");
   const [passwordVisible, setPassVisibility] = useState(false);
   const inputsControle = {
     password: useRef(""),
@@ -18,6 +18,7 @@ export default function () {
   };
   return (
     <div className="login">
+      <div className="loading-bar" ref={loadingBarRef}></div>
       <div>
         <span className="error" ref={inputsControle.error_message_info}></span>
         <h1>Sign in</h1>
@@ -58,10 +59,13 @@ export default function () {
           type="submit"
           onClick={async () => {
             if (formData.login.trim().length < 3 || formData.password.trim().length < 4) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required and password must contains minimum of 4 characters");
+            loadingBarRef.current.classList.add("active");
             const [error, data] = await login(formData.login, formData.password);
+            loadingBarRef.current.classList.remove("active");
+
             if (error) return (inputsControle.error_message_info.current.innerHTML = error.response?.data || error.message);
-            setUserData(data);
             localStorage.setItem(jwt_token, data.token);
+            setUserData(data);
           }}
           value="sign in"
         />

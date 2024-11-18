@@ -25,7 +25,8 @@ function App() {
   useEffect(() => {
     if (!userData.token) return Store.navigateTo("/login" + "?backLink=" + window.location.pathname);
     const backLink = new URLSearchParams(window.location.search);
-    Store.navigateTo(backLink.get("backLink") || "/");
+    if (backLink.get("backLink") == "/login") return Store.navigateTo("/");
+    if (backLink.get("backLink")) Store.navigateTo(backLink.get("backLink"));
     // if (forbedenRoutesFor[userData.data.role].includes(window.location.pathname)) {
     //   Store.navigateTo("/");
     //   return;

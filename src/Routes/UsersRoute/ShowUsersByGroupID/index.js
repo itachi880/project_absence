@@ -14,9 +14,10 @@ export default function () {
     if (studens[id]) return setDataLoadedFlag(true);
     getUsersByGroupID(id, localStorage.getItem(jwt_token)).then((res) => {
       setStudents({ [id]: res[1]?.data });
+
+      if (groups.groups.find((group) => group._id == id)) return setDataLoadedFlag(true);
       getGroupByID(localStorage.getItem(jwt_token), id).then((res) => {
         setGroups({ groups: [...groups.groups, res[1]] }, true);
-        setDataLoadedFlag(true);
       });
     });
   }, []);
