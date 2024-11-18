@@ -1,6 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { GroupsDataStore, jwt_token } from "../../../data";
+import {getGroups}   from '../../../api/index' 
 
 export default function () {
+ const  [groups,setGroups]=GroupsDataStore.useStore()
   const [formData, setFormData] = useState({
     login: "",
     password: "",
@@ -9,7 +12,15 @@ export default function () {
   const inputsControle = {
     error_message_info: useRef(""),
   };
+  useEffect(()=>{
+    getGroups(window.localStorage.getItem(jwt_token),false).then((res)=>{
+      if(res[0]) return 
+      setGroups({groups:res[1]},true)
+
+    })
+  },[])
   return (
+
     <div className="login">
       <div className="loading-bar" ref={loadingBarRef}></div>
       <div>
@@ -56,6 +67,17 @@ export default function () {
               setFormData({ ...formData, login: e.target.value });
             }}
           />
+        </div>
+        <div className="input">
+          <select>
+            <option hidden selected>selectionner  le groupe</option>
+            {
+              groups.groups.map((e)=>{
+                return <option value={e._id}>{e.name}</option>
+
+              })
+            }
+          </select>
         </div>
         <input
           type="submit"
