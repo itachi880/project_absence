@@ -2,7 +2,7 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getGroupByID, getUsersByGroupID } from "../../../api";
-import { GroupsDataStore, jwt_token, studentsByGroup } from "../../../data";
+import { GroupsDataStore, jwt_token, loadingFlag, studentsByGroup } from "../../../data";
 import { PopUp, spans, TableByJson } from "../../../utils";
 import { Store } from "react-data-stores";
 export default function () {
@@ -10,20 +10,23 @@ export default function () {
   const [groups, setGroups] = GroupsDataStore.useStore();
   const [studens, setStudents] = studentsByGroup.useStore();
   const [isDataLoaded, setDataLoadedFlag] = useState(false);
+  const [loading, setLoadingFlag] = loadingFlag.useStore();
   useEffect(() => {
-    if (studens[id]) return setDataLoadedFlag(true);
+    setLoadingFlag({ state: true });
+    if (studens[id]) return setLoadingFlag({ state: false });
     getUsersByGroupID(id, localStorage.getItem(jwt_token)).then((res) => {
       setStudents({ [id]: res[1]?.data });
 
-      if (groups.groups.find((group) => group._id == id)) return setDataLoadedFlag(true);
+      if (groups.groups.find((group) => group._id == id)) return setLoadingFlag({ state: false });
       getGroupByID(localStorage.getItem(jwt_token), id).then((res) => {
+        setLoadingFlag({ state: false });
+        if (res[0]) return;
         setGroups({ groups: [...groups.groups, res[1]] }, true);
       });
     });
   }, []);
   return (
     <div className="table-container">
-      <PopUp color="var(--maybe-color)" isLoading={!isDataLoaded} message="loading groups..." removeOnClick={false} timer={false} />
       <TableByJson
         data={
           studens[id]?.map((student) => {

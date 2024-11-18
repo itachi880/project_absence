@@ -68,9 +68,11 @@ export const roles = {
   formateur: "FR",
   etudient: "student",
 };
+export const statusCertif = { panding: "pending", valide: "validated", no_valide: "not validated" };
 export const jwt_token = "jwt_token";
 export const forbedenRoutesFor = {
   [roles.etudient]: ["/groups"],
   [roles.formateur]: [],
   [roles.generale_survience]: [],
 };
+export const loadingFlag = createStore({ state: false });

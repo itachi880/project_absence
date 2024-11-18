@@ -14,7 +14,7 @@
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 10px 0px var(--nav-black-shadow);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .show-user-by-id.wrapper .tile-content {
   position: relative;
@@ -257,4 +257,58 @@
 
 .btn-secondary:hover {
   background-color: #565e64;
+}
+.icon-container i {
+  color: var(--primary-bleu);
+  padding: 2px;
+}
+
+.icon-container {
+  background-color: var(--secondary-bleu);
+  border: 1px solid var(--primary-bleu);
+  width: 25px;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  display: inline;
+  cursor: pointer;
+}
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.confirm-certif {
+  position: absolute;
+  top: 110%;
+  background-color: #e7f0e7dc;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+  right: 0;
+  aspect-ratio: 16/9;
+  border-radius: 5px;
+  transition: all ease-in-out 5s;
+}
+.confirm-certif-none {
+  display: none;
+}
+.validate-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+.validate-button:nth-child(1) {
+  background-color: var(--correct-color);
+}
+.validate-button:nth-child(2) {
+  background-color: var(--error-color);
 }
