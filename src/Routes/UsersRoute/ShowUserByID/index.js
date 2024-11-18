@@ -139,7 +139,7 @@ export default function () {
 
 const ShowUser = ({ studentsData, groups, group, id }) => {
   const d = studentsData[group]?.filter((student) => student._id === id)[0];
-  const [loading, setLoadingFlag] = loadingFlag.useStore();
+  const [_, setLoadingFlag] = loadingFlag.useStore();
 
   useEffect(() => {
     setLoadingFlag({ state: true });
@@ -201,7 +201,6 @@ function ShowJustifCard({ datesToMark = [], selectedDate = "" }) {
     getJustificationByID(certif?.justif_id, localStorage.getItem(jwt_token)).then((res) => {
       if (res[0] || !res[1]?._id) return;
       setSelectedCertif(res[1]);
-
       setCertifStore({ data: [...certifStore.data, res[1]] });
       setLoadingFlag({ state: false });
     });
