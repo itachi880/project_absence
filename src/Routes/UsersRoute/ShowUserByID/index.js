@@ -140,7 +140,7 @@ const ShowUser = ({ studentsData, groups, group, id }) => {
         <strong>Cin :</strong> {d.cin}
       </p>
       <p>
-        <strong>Cin :</strong> {}
+      <strong>justification_days_left :</strong> {d.justification_days_left}
       </p>
       <p>
         <strong>Group :</strong>{" "}
