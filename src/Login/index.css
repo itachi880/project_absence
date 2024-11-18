@@ -8,6 +8,8 @@
   gap: 30px;
   width: 20rem;
   font-size: 1.1rem;
+  position: relative;
+  overflow: hidden;
 }
 .login .error {
   color: var(--error-color);
@@ -92,4 +94,35 @@
 .login span,
 .login input[type="submit"] {
   cursor: pointer;
+}
+.login .loading-bar {
+  position: absolute;
+  top: 0px;
+  height: 5px;
+  background-color: blue;
+}
+.login .loading-bar.active {
+  animation: loading-bar-animation 1s linear 0s infinite;
+}
+@keyframes loading-bar-animation {
+  0% {
+    left: 0;
+    width: 0;
+  }
+  25% {
+    left: 0;
+    width: 40%;
+  }
+  50% {
+    left: 30%;
+    width: 30%;
+  }
+  75% {
+    left: 70%;
+    width: 10%;
+  }
+  100% {
+    left: 100%;
+    width: 0;
+  }
 }

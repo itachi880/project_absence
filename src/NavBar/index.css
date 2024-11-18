@@ -19,7 +19,7 @@
   border-radius: 50%;
 }
 .nav_bar .section {
-  width: calc(100% / 3);
+  width: calc((100% / 3));
   height: 100%;
   display: flex;
   justify-content: center;

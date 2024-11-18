@@ -16,7 +16,9 @@ export const userDataStore = createStore({
   },
 });
 export const GroupsDataStore = createStore({
-  groups: [{ createdAt: undefined, is_deleted: "", name: "", study_year: 0, updatedAt: undefined, __v: 0, _id: "" }],
+  groups: [
+    // { createdAt: undefined, is_deleted: "", name: "", study_year: 0, updatedAt: undefined, __v: 0, _id: "" }
+  ],
 });
 export const studentsByGroup = createStore({
   dev106: [
@@ -32,6 +34,7 @@ export const studentsByGroup = createStore({
       is_deleted: false,
       role: "",
       profile: null,
+      displine_points: 0,
     },
   ],
 });
@@ -54,6 +57,9 @@ export const absences = createStore({
     },
   ],
 });
+export const justificationsStore = createStore({
+  data: [],
+});
 export const getServerLink = (path) => {
   return "http://localhost:5000/" + path;
 };
@@ -62,9 +68,11 @@ export const roles = {
   formateur: "FR",
   etudient: "student",
 };
+export const statusCertif = { panding: "pending", valide: "validated", no_valide: "not validated" };
 export const jwt_token = "jwt_token";
 export const forbedenRoutesFor = {
   [roles.etudient]: ["/groups"],
   [roles.formateur]: [],
   [roles.generale_survience]: [],
 };
+export const loadingFlag = createStore({ state: false });

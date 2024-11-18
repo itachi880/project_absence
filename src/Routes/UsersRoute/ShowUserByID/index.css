@@ -1,14 +1,36 @@
+.show-user-by-id.wrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas:
+    "UC UC UC UC UC UC"
+    "PU PU CA CA HR HR";
+  width: 100%;
+  max-width: 900px;
+  gap: 10px;
+}
 /* Container to position the dot independently */
-.calander-container .tile-content {
+.show-user-by-id.wrapper .justifications {
+  grid-area: PU;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0px var(--nav-black-shadow);
+  /* overflow: hidden; */
+}
+.show-user-by-id.wrapper .tile-content {
   position: relative;
   top: 0;
   display: flex;
   width: 100%;
   height: 100%;
 }
-
+.show-user-by-id.wrapper .calander {
+  grid-area: CA;
+}
+.show-user-by-id.wrapper table {
+  grid-area: HR;
+}
 /* Dot styling with absolute positioning */
-.calander-container .event-dot {
+.show-user-by-id.wrapper .event-dot {
   position: absolute;
   top: 0%; /* Adjust based on preferred spacing */
   width: 4px;
@@ -17,12 +39,15 @@
   background-color: #ff0000;
   border-radius: 50%;
 }
-.calander-container {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  flex-direction: row;
-  gap: 20px;
+
+.react-calendar {
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.react-calendar button {
+  border-radius: 5px !important;
+  overflow: hidden;
 }
 .day-data {
   background-color: white;
@@ -34,28 +59,256 @@
   font-size: x-large;
   color: #acf39d;
 }
+
 .user-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 400px;
-  margin: 20px auto;
-  text-align: left;
+  background-color: white;
+
+  padding: 5px;
+  border-radius: 5px;
+  text-align: start;
+  grid-area: UC;
+  /* height: 70vh; */
+  box-shadow: 0 0 8px 0px var(--nav-black-shadow);
+
+  justify-content: space-between;
+}
+.user-card .student-profile img {
+  width: 100%;
+}
+.user-card .student-profile {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid black;
+  overflow: hidden;
+}
+.user-card .student-info {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  align-items: center;
+  gap: 10px;
 }
 
-.user-card h4 {
-  font-size: 1.5em;
-  color: #333;
-  margin-bottom: 15px;
+.user-card .student-info .attrebuts {
+  display: flex;
+  flex-direction: column;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  align-items: start;
+}
+.user-card .student-info .attrebuts div {
+  display: flex;
+  gap: 2px;
+}
+.user-card .student-info .attrebuts span {
+  font-size: 0.9rem !important;
+  padding: 2px !important;
+  border-radius: 3px !important;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
-.user-card p {
-  font-size: 1em;
-  color: #666;
-  margin: 8px 0;
+.user-card .section {
+  flex-grow: 1; /* Allow sections to grow equally */
+  text-align: center; /* Center content inside each section */
+  padding: 0.8em 1em;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin: 0 5px; /* Small margin between sections */
+  font-size: 0.9rem; /* Reduced font size for labels */
+  font-weight: normal; /* Lighter text weight */
+  word-wrap: break-word; /* Ensure text wraps in case of overflow */
 }
 
-.user-card strong {
-  color: #333;
+.user-card .section i {
+  margin-right: 0.4em; /* Reduced space between icon and text */
+  font-size: 1.2em; /* Slightly smaller icon size */
+}
+
+.user-card .icons-labels {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 2px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+.user-card .discipline {
+  color: var(--maybe-color); /* Gold */
+}
+
+.user-card .absence-unjustified {
+  color: var(--error-color); /* Red */
+}
+
+.user-card .absence-justified {
+  color: var(--correct-color); /* Green */
+}
+
+.user-card .section:hover {
+  background-color: var(--background-gray-light);
+  cursor: pointer;
+}
+.calander-comp button {
+  padding: 10px;
+  margin-block: 1px;
+}
+.calander-comp .react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.show-user-by-id.wrapper .justifications .card-header {
+  background-color: var(--back-ground-certif);
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.show-user-by-id.wrapper .justifications .card-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.show-user-by-id.wrapper .justifications .card-body {
+  padding: 10px;
+}
+
+.show-user-by-id.wrapper .justifications .card-body p {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+.show-user-by-id.wrapper .justifications .card-body .pdf-link {
+  color: #0073e6;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.show-user-by-id.wrapper .justifications .card-body .pdf-link:hover {
+  text-decoration: underline;
+}
+
+.show-user-by-id.wrapper .justifications .card-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.show-user-by-id.wrapper .justifications .card-footer .btn-primary,
+.show-user-by-id.wrapper .justifications .card-footer .btn-secondary {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.show-user-by-id.wrapper .justifications .card-footer .btn-primary {
+  background-color: #0073e6;
+  color: white;
+}
+
+.show-user-by-id.wrapper .justifications .card-footer .btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.show-user-by-id.wrapper .justifications .card-footer .btn-primary:hover {
+  background-color: #005bb5;
+}
+
+.show-user-by-id.wrapper .justifications .card-footer .btn-secondary:hover {
+  background-color: #565e64;
+}
+.pdf-link {
+  color: #0073e6;
+  text-decoration: none;
+  font-weight: bold;
+}
+.btn-primary,
+.btn-secondary {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: #0073e6;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #005bb5;
+}
+
+.btn-secondary:hover {
+  background-color: #565e64;
+}
+.icon-container i {
+  color: var(--primary-bleu);
+  padding: 2px;
+}
+
+.icon-container {
+  background-color: var(--secondary-bleu);
+  border: 1px solid var(--primary-bleu);
+  width: 25px;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  display: inline;
+  cursor: pointer;
+}
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+.confirm-certif {
+  position: absolute;
+  top: 110%;
+  background-color: #e7f0e7dc;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
+  right: 0;
+  aspect-ratio: 16/9;
+  border-radius: 5px;
+  transition: all ease-in-out 5s;
+}
+.confirm-certif-none {
+  display: none;
+}
+.validate-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+.validate-button:nth-child(1) {
+  background-color: var(--correct-color);
+}
+.validate-button:nth-child(2) {
+  background-color: var(--error-color);
 }
