@@ -57,6 +57,9 @@ export const absences = createStore({
     },
   ],
 });
+export const justificationsStore = createStore({
+  data: [],
+});
 export const getServerLink = (path) => {
   return "http://localhost:5000/" + path;
 };
