@@ -54,7 +54,7 @@
   box-sizing: border-box;
   padding: 5px;
 }
-.calander-container .react-calendar button {
+.react-calendar button {
   border-radius: 5px !important;
   overflow: hidden;
 }
