@@ -1,6 +1,6 @@
 import "./index.css";
-import { PopUp, spans, TableByJson } from "../../../utils";
-import { useEffect, useState } from "react";
+import { spans, TableByJson } from "../../../utils";
+import { useEffect } from "react";
 import { getGroups } from "../../../api";
 import { forbedenRoutesFor, GroupsDataStore, loadingFlag, userDataStore } from "../../../data";
 import { Store } from "react-data-stores";
@@ -17,9 +17,9 @@ export default function () {
     setLoadingFlag({ state: true });
     if (groups.groups.length > 1) return setLoadingFlag({ state: false });
 
-    getGroups(userData.token, true).then((res) => {
+    getGroups(userData.token, false, 0).then((res) => {
       if (res[0]) return;
-      setGroups({ groups: res[1] }, true);
+      setGroups({ groups: res[1].groups.filter((e) => !groups.groups.find((o) => o._id == e._id)), pageCount: groups.pageCount + 1 }, false);
       setLoadingFlag({ state: false });
     });
   }, []);
@@ -37,6 +37,27 @@ export default function () {
           Store.navigateTo(`/users/show/group/${obj._id}`);
         }}
       />
+      {!groups.finish ? (
+        <button
+          onClick={() => {
+            setLoadingFlag({ state: true });
+            getGroups(userData.token, false, groups.pageCount).then((res) => {
+              if (res[0]) return;
+              if (res[1].groups.length == 0) {
+                setLoadingFlag({ state: false });
+                setGroups({ finish: true }, false);
+                return;
+              }
+              setGroups({ groups: [...groups.groups, ...res[1].groups], pageCount: groups.pageCount + 1 }, false);
+              setLoadingFlag({ state: false });
+            });
+          }}
+        >
+          load more
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

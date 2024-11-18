@@ -28,7 +28,7 @@ export const auth_token = async (token) => {
     });
   return result;
 };
-export const getGroups = async (token, archived = false) => {
+export const getGroups = async (token, archived = false, pageNumber = 0) => {
   if (!token) return ["data incompleat", null];
 
   const result = [null, null];
@@ -37,6 +37,7 @@ export const getGroups = async (token, archived = false) => {
       params: {
         token,
         archived,
+        pageNumber,
       },
     })
     .then((data) => {
