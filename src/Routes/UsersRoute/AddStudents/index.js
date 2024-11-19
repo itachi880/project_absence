@@ -16,7 +16,7 @@ export default function () {
   useEffect(()=>{
     getGroups(window.localStorage.getItem(jwt_token),false).then((res)=>{
       if(res[0]) return 
-      setGroups({groups:res[1]},false)
+      setGroups({groups:res[1].groups},false)
       console.log(groups.groups)
 
     })
