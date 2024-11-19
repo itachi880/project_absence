@@ -134,5 +134,17 @@ export const addStudent=async (first_name,last_name,cin,login,group,token)=>{
   })
   return result
 }
-
+export const searchGroupsByName=async(query)=>{
+  if (!query) return [true, null];
+  const result = [null, null];
+  await axios  
+  .get(getServerLink('groups/searchGroups'),{ params: { query } })
+  .then((res)=>{
+    result[1]=res.data
+  })
+  .catch((e)=>{
+    result[0]=e
+  })
+return result
+}
 
