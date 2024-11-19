@@ -172,7 +172,7 @@ const ShowUser = ({ studentsData, groups, group, id }) => {
           </div>
         </div>
         <div className="section discipline">
-          <i className="fa-solid fa-star"></i> 20/20
+          <i className="fa-solid fa-star"></i> {d.displine_points}/20
         </div>
         <div className="section absence-unjustified">
           <i className="fa-solid fa-circle-exclamation"></i> 0h

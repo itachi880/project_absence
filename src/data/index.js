@@ -17,11 +17,10 @@ export const userDataStore = createStore({
 });
 export const GroupsDataStore = createStore({
   groups: [
-    { createdAt: undefined, is_deleted: "", name: "", study_year: 0, updatedAt: undefined, __v: 0, _id: "" }
-
-
+    // { createdAt: undefined, is_deleted: "", name: "", study_year: 0, updatedAt: undefined, __v: 0, _id: "" }
   ],
   pageCount: 0,
+  pageCountDeleted: 0,
   finish: false,
 });
 export const studentsByGroup = createStore({
