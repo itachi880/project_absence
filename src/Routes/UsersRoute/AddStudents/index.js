@@ -15,7 +15,18 @@ export default function () {
   useEffect(() => {
     getGroups(window.localStorage.getItem(jwt_token), false).then((res) => {
       if (res[0]) return;
-      setGroups({ groups: res[1] }, false);
+      const exist = [];
+      setGroups(
+        {
+          groups: [...res[1].groups, ...groups.groups].filter((group) => {
+            if (!exist.includes(group._id)) {
+              exist.push(group._id);
+              return true;
+            }
+          }),
+        },
+        false
+      );
     });
   }, []);
   return (
