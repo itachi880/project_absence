@@ -120,19 +120,29 @@ export const getJustificationByID = async (id, token) => {
     });
   return result;
 };
-export const addStudent=async (first_name,last_name,cin,login,group,token)=>{
-  if (!token ) return [true, null];
+export const addStudent = async (first_name, last_name, cin, login, group, token) => {
+  if (!token) return [true, null];
   const result = [null, null];
-  await axios 
-  .get(getServerLink('students/add'), { params: { first_name, last_name,cin,login, group,token,password:cin} })
-  .then((res)=>{
-    result[1]=res.data
-  })
-  .catch((e)=>{
-    result[0]=e
-
-  })
-  return result
-}
-
-
+  await axios
+    .post(getServerLink("students/add"), { first_name, last_name, cin, login, group, token, password: cin })
+    .then((res) => {
+      result[1] = res.data;
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+  return result;
+};
+export const searchGroupsByName = async (query) => {
+  if (!query) return [true, null];
+  const result = [null, null];
+  await axios
+    .get(getServerLink("groups/searchGroups"), { params: { query } })
+    .then((res) => {
+      result[1] = res.data;
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+  return result;
+};
