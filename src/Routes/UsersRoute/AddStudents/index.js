@@ -69,11 +69,15 @@ export default function () {
         <div className="input">
           <select>
             <option hidden selected>
-              selectionner le groupe
+              sélectionner le groupe
             </option>
-            {groups.groups.map((e) => {
-              return <option value={e._id}>{e.name}</option>;
-            })}
+            {Array.isArray(groups.groups)
+              ? groups.groups.map((e) => (
+                  <option key={e._id} value={e._id}>
+                    {e.name}
+                  </option>
+                ))
+              : ""}
           </select>
         </div>
         <input
