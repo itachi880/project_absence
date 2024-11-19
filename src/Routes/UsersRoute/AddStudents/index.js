@@ -12,10 +12,12 @@ export default function () {
   const inputsControle = {
     error_message_info: useRef(""),
   };
+
   useEffect(()=>{
     getGroups(window.localStorage.getItem(jwt_token),false).then((res)=>{
       if(res[0]) return 
-      setGroups({groups:res[1]},true)
+      setGroups({groups:res[1]},false)
+      console.log(groups.groups)
 
     })
   },[])
@@ -69,16 +71,18 @@ export default function () {
           />
         </div>
         <div className="input">
-          <select>
-            <option hidden selected>selectionner  le groupe</option>
-            {
-              groups.groups.map((e)=>{
-                return <option value={e._id}>{e.name}</option>
-
-              })
-            }
-          </select>
-        </div>
+  <select>
+    <option hidden selected>
+      sélectionner le groupe
+    </option>
+    {Array.isArray(groups.groups) ?
+  groups.groups.map((e) => (
+    <option key={e._id} value={e._id}>
+      {e.name}
+    </option>
+  )):""}
+  </select>
+</div>
         <input
           type="submit"
           onClick={async () => {
