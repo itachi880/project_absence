@@ -83,11 +83,13 @@ export default function () {
               sélectionner le groupe
             </option>
             {Array.isArray(groups.groups)
-              ? groups.groups.map((e) => (
-                  <option key={e._id} value={e._id}>
-                    {e.name}
-                  </option>
-                ))
+              ? groups.groups
+                  .filter((group) => !group.is_deleted)
+                  .map((e) => (
+                    <option key={e._id} value={e._id}>
+                      {e.name}
+                    </option>
+                  ))
               : ""}
           </select>
         </div>
