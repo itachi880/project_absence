@@ -21,7 +21,7 @@ export default function () {
       getGroupByID(localStorage.getItem(jwt_token), id).then((res) => {
         setLoadingFlag({ state: false });
         if (res[0]) return;
-        setGroups({ groups: [...groups.groups, res[1]] }, true);
+        setGroups({ groups: [...groups.groups, res[1]] }, false);
       });
     });
   }, []);
