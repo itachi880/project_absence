@@ -12,7 +12,7 @@ export default function () {
   const inputsControle = {
     error_message_info: useRef(""),
   };
-  const [search,setSearch]=useState([])
+  const [search,setSearch]=useState({na:[],keys:["na"]})//de:[{},{}],keys:["de","id"],id:[{},{}]
   useEffect(() => {
     getGroups(window.localStorage.getItem(jwt_token), false).then((res) => {
       if (res[0]) return;
@@ -32,14 +32,16 @@ export default function () {
   }, []);
   const handleSearch = async (value) => {
     if(value.trim().length<2) return ;
-    const result=search.filter(obj=>obj.name.toLowerCase().includes(value.toLowerCase()))
+    const result=search[search.keys.find((key)=>value.toLowerCase().trim().includes(key.toLocaleLowerCase()))]?.filter(obj=>obj.name.toLowerCase().includes(value.toLowerCase()))||[]
+    
+    
     if(result.length>0){
       console.log("Search results local:", result);
       return ;
     }
     const [error, data] = await searchGroupsByName(value);
     if (error) return console.error("Error searching groups:", error);
-    setSearch(data);
+    setSearch({...search,[value.toLowerCase().trim()]:data,keys:[...search.keys,value.toLowerCase().trim()]});
     console.log("Search results server:", data);
   };
   return (
