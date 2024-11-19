@@ -59,9 +59,9 @@ export default function () {
           type="submit"
           onClick={async () => {
             if (formData.login.trim().length < 3 || formData.password.trim().length < 4) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required and password must contains minimum of 4 characters");
-            loadingBarRef.current.classList?.add("active");
+            loadingBarRef.current?.classList?.add("active");
             const [error, data] = await login(formData.login, formData.password);
-            loadingBarRef.current.classList?.remove("active");
+            loadingBarRef.current?.classList?.remove("active");
 
             if (error) return (inputsControle.error_message_info.current.innerHTML = error.response?.data || error.message);
             localStorage.setItem(jwt_token, data.token);
