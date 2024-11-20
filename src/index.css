@@ -43,3 +43,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+input {
+  -webkit-appearance: none; /* For WebKit-based browsers like Chrome, Safari */
+  -moz-appearance: none; /* For Firefox */
+  appearance: none; /* Standard syntax */
+}

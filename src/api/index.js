@@ -53,7 +53,7 @@ export const getUsersByGroupID = async (id, token) => {
 
   const result = [null, null];
   await axios
-    .get(getServerLink("students/getByGroupID"), {
+    .get(getServerLink("users/getByGroupID"), {
       params: {
         token,
         id,
@@ -124,7 +124,7 @@ export const addStudent = async (first_name, last_name, cin, login, group, token
   if (!token) return [true, null];
   const result = [null, null];
   await axios
-    .post(getServerLink("students/add"), { first_name, last_name, cin, login, group, token, password: cin })
+    .post(getServerLink("users/add"), { first_name, last_name, cin, login, group, token, password: cin })
     .then((res) => {
       result[1] = res.data;
     })

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GroupsDataStore, jwt_token, loadingFlag } from "../../../data";
+import { GroupsDataStore, jwt_token, loadingFlag, userDataStore } from "../../../data";
 import { addStudent, getGroups } from "../../../api/index";
 import { searchGroupsByName } from "../../../api/index";
 import "./index.css";
@@ -12,6 +12,7 @@ export default function () {
     cin: "",
     group: "",
   });
+  const [userData, setUserData] = userDataStore.useStore();
   const [loading, setLoadingFlag] = loadingFlag.useStore();
   const inputsControle = {
     error_message_info: useRef(""),
@@ -44,7 +45,7 @@ export default function () {
     setFetchFlag(false);
   };
   useEffect(() => {
-    getGroups(window.localStorage.getItem(jwt_token), false).then((res) => {
+    getGroups(userData.token, false).then((res) => {
       if (res[0]) return;
       const exist = [];
       setGroups(
@@ -128,7 +129,7 @@ export default function () {
             if (formData.login?.trim()?.length < 3 || formData.cin?.trim()?.length < 3 || formData.first_name?.trim()?.length < 3 || formData.last_name?.trim()?.length < 3 || formData.group?.trim()?.length < 3) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required and password must contains minimum of 4 characters");
             setLoadingFlag({ state: true });
 
-            addStudent(formData.first_name, formData.last_name, formData.cin, formData.login, formData.group, localStorage.getItem(jwt_token))
+            addStudent(formData.first_name, formData.last_name, formData.cin, formData.login, formData.group, userData.token)
               .then(console.log)
               .then(() => setLoadingFlag({ state: false }));
           }}
