@@ -36,9 +36,7 @@ export default function () {
       setLoadingFlag({ state: false });
     });
   }, []);
-  useEffect(() => {
-    console.log(groups.pageCount);
-  }, [groups.pageCount]);
+
   return (
     <div className="table_container">
       <button
