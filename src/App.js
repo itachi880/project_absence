@@ -17,7 +17,7 @@ function App() {
     let [error, data] = [null, null];
     if (!localStorage.getItem(jwt_token)) return [true, null];
     [error, data] = await auth_token(localStorage.getItem(jwt_token));
-    if (error) return;
+    if (error) return localStorage.removeItem(jwt_token);
     setUserData({ token: localStorage.getItem(jwt_token), data: data.data });
   }
   useEffect(() => {

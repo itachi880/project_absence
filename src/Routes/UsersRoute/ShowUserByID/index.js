@@ -7,6 +7,7 @@ import "./index.css";
 import { absences, GroupsDataStore, justificationsStore, jwt_token, loadingFlag, roles, statusCertif, studentsByGroup, userDataStore } from "../../../data";
 import { getGroupByID, getJustificationByID, getUserAbsenceByID, getUsersByGroupID } from "../../../api";
 import { spans } from "../../../utils";
+import { Store } from "react-data-stores";
 
 export default function () {
   const date = new Date();
@@ -41,7 +42,7 @@ export default function () {
     if (studentAbsence.length === 0) return;
     if (absencesStore.data.fi) return; // to do ??
     setLoadingFlag({ state: true });
-    getUserAbsenceByID(localStorage.getItem(jwt_token), studentAbsence[studentAbsence.length - 1]).then((res) => {
+    getUserAbsenceByID(userData.token, studentAbsence[studentAbsence.length - 1]).then((res) => {
       setLoadingFlag({ state: false });
       if (res[0]) return console.log(res[0]);
       setAbsencesStore({ data: [res[1]] }, false);
@@ -72,7 +73,9 @@ export default function () {
     setDatesToMarkeCheck(dates);
     setDatesToMarke(events);
   }, [absencesStore]);
-
+  useEffect(() => {
+    if (userData.data.role != roles.generale_survience && id != userData.data._id) Store.navigateTo("/");
+  }, []);
   return (
     <div className="show-user-by-id wrapper">
       <ShowUser groups={groups} studentsData={studentsData} group={group} id={id} />
@@ -198,7 +201,7 @@ function ShowJustifCard({ datesToMark = [], selectedDate = "" }) {
     //ila l9it certif deja kayna f base local manjibohach mn base donne fserveur dik index ila kant -1 ya3ni certif makaynach ila kant 0+ m3naha l9inaha
     if (index > -1) return setSelectedCertif(certifStore.data[index]);
     setLoadingFlag({ state: true });
-    getJustificationByID(certif?.justif_id, localStorage.getItem(jwt_token)).then((res) => {
+    getJustificationByID(certif?.justif_id, userData.token).then((res) => {
       if (res[0] || !res[1]?._id) return;
       setSelectedCertif(res[1]);
       setCertifStore({ data: [...certifStore.data, res[1]] });
