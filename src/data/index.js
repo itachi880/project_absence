@@ -75,7 +75,7 @@ export const statusCertif = { panding: "pending", valide: "validated", no_valide
 export const jwt_token = "jwt_token";
 export const forbedenRoutesFor = {
   [roles.etudient]: ["/groups"],
-  [roles.formateur]: [],
-  [roles.generale_survience]: [],
+  [roles.formateur]: ["/users/add"],
+  [roles.generale_survience]: ["/admin"],
 };
 export const loadingFlag = createStore({ state: false });
