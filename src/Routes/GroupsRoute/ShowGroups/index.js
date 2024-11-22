@@ -1,7 +1,7 @@
 import "./index.css";
 import { spans, TableByJson } from "../../../utils";
 import { useEffect, useState } from "react";
-import { getGroups } from "../../../api";
+import { deleteGroup, getGroups } from "../../../api";
 import { forbedenRoutesFor, GroupsDataStore, loadingFlag, userDataStore } from "../../../data";
 import { Store } from "react-data-stores";
 
@@ -51,8 +51,13 @@ export default function () {
         replace_column_names={{ is_deleted: "status", study_year: "study years" }}
         data={groups.groups.map((group) => ({
           ...group,
+      
           is_deleted: !group.is_deleted ? <spans.true text={"Active"} /> : <spans.false text={"archive"} />,
           study_year: group.study_year + "/" + (group.study_year + 1),
+          Delete:<button onClick={()=>{
+            console.log('hii')
+            deleteGroup(userData.token,group._id).then(console.log)
+          }}>Delete</button>
         }))}
         exclude={["updatedAt", "__v", "createdAt", "_id"]}
         dataTdsOnclick={(index, obj, event) => {
