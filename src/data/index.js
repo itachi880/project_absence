@@ -24,7 +24,7 @@ export const GroupsDataStore = createStore({
   finish: false,
 });
 export const studentsByGroup = createStore({
-  dev106: [
+  id: [
     {
       group: null,
       _id: "",

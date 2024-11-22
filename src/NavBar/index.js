@@ -27,8 +27,8 @@ export default function () {
             className="fa-solid fa-right-from-bracket"
             title="LOG OUT"
             onClick={() => {
-              setUserData({}, true);
               localStorage.removeItem(jwt_token);
+              window.location.reload();
             }}
           ></i>
         </div>

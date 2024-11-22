@@ -32,9 +32,9 @@ export default function () {
           return;
         }
         const [error, data] = await getGroupByID(userData.token, group);
-        setStudentsData({ [group]: res[1].data }, false); // false = add // true = update
         if (error) return setLoadingFlag({ state: false });
         setLoadingFlag({ state: false });
+        setStudentsData({ [group]: res[1].data }, false); // false = add // true = update
         setGroups({ groups: [...groups.groups, data] });
       });
     }
@@ -73,12 +73,10 @@ export default function () {
     setDatesToMarkeCheck(dates);
     setDatesToMarke(events);
   }, [absencesStore]);
-  useEffect(() => {
-    if (userData.data.role != roles.generale_survience && id != userData.data._id) Store.navigateTo("/");
-  }, []);
+  // useEffect(() => {}, []);
   return (
     <div className="show-user-by-id wrapper">
-      <ShowUser groups={groups} studentsData={studentsData} group={group} id={id} />
+      <ShowUser groups={groups} studentsData={studentsData || []} group={group} id={id} />
       <ShowJustifCard datesToMark={datesToMark} selectedDate={selectedDate} />
 
       <div className="calander">
@@ -140,8 +138,8 @@ export default function () {
   );
 }
 
-const ShowUser = ({ studentsData, groups, group, id }) => {
-  const d = studentsData[group]?.filter((student) => student._id === id)[0];
+const ShowUser = ({ studentsData = [], groups, group, id }) => {
+  const d = studentsData[group]?.filter((student) => student._id === id)[0] || undefined;
   const [_, setLoadingFlag] = loadingFlag.useStore();
 
   useEffect(() => {
@@ -173,9 +171,13 @@ const ShowUser = ({ studentsData, groups, group, id }) => {
             <spans.maybe text={d.cin} />
           </div>
         </div>
-        <div className="section discipline">
-          <i className="fa-solid fa-star"></i> {d.displine_points}/20
-        </div>
+        {d.displine_points ? (
+          <div className="section discipline">
+            <i className="fa-solid fa-star"></i> {d.displine_points}/20
+          </div>
+        ) : (
+          ""
+        )}
         <div className="section absence-unjustified">
           <i className="fa-solid fa-circle-exclamation"></i> 0h
         </div>
@@ -252,7 +254,7 @@ function ShowJustifCard({ datesToMark = [], selectedDate = "" }) {
                 <td className="status">
                   {selectedCertif?.status == statusCertif.no_valide ? <spans.false text={"pas valide"} /> : selectedCertif?.status == statusCertif.panding ? <spans.maybe text={"en cours"} /> : <spans.true text={"valide"} />}
 
-                  {userData.data.role == roles.generale_survience ? (
+                  {userData?.data?.role == roles.generale_survience ? (
                     <>
                       <div className="icon-container" onClick={() => setIsHovered((e) => !e)}>
                         <i className="fa-solid fa-ellipsis-vertical"></i>

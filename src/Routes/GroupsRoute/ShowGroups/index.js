@@ -51,15 +51,33 @@ export default function () {
         replace_column_names={{ is_deleted: "status", study_year: "study years" }}
         data={groups.groups.map((group) => ({
           ...group,
-      
+
           is_deleted: !group.is_deleted ? <spans.true text={"Active"} /> : <spans.false text={"archive"} />,
           study_year: group.study_year + "/" + (group.study_year + 1),
-          Delete:<spans.false text={'Delete' }   onClick={()=>{
-              deleteGroup(userData.token,group._id).then(console.log)
-          }}/>
+          Delete: (
+            <spans.false
+              text={<i className="fa-solid fa-trash-can"></i>}
+              onClick={() => {
+                setLoadingFlag({ state: true });
+                deleteGroup(userData.token, group._id).then((res) => {
+                  setLoadingFlag({ state: false });
+                  if (res[0]) return console.warn(res[0]);
+                  if (res[1] !== 200) return;
+                  setGroups(
+                    {
+                      groups: groups.groups.map((e) => {
+                        if (e._id == group._id) e.is_deleted = true;
+                        return e;
+                      }),
+                    },
+                    false
+                  );
+                });
+              }}
+            />
+          ),
         }))}
         nonClickableTd={["Delete"]}
-
         exclude={["updatedAt", "__v", "createdAt", "_id"]}
         dataTdsOnclick={(index, obj, event) => {
           Store.navigateTo(`/users/show/group/${obj._id}`);
