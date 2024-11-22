@@ -94,3 +94,49 @@ li {
   padding: 0 10px 2px 10px;
   color: var(--primary-bleu);
 }
+.add-student .role-select {
+  width: 100%;
+  background-color: white;
+  padding: 15px 20px;
+  outline: none;
+  border: 1px solid black;
+  text-align: start;
+}
+.add-student .role-select:focus {
+  border: 2px solid var(--primary-bleu);
+}
+.add-student .drop-down {
+  position: absolute;
+  bottom: -62px;
+  z-index: 10000;
+  height: 60px;
+  left: 0;
+  width: 100%;
+  background-color: rgb(252, 252, 252);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.add-student .input.select {
+  padding: 15px 20px;
+}
+.add-student .input.select.active {
+  border-color: var(--primary-bleu);
+  outline: 2px solid var(--primary-bleu);
+}
+.add-student .selected-option {
+  width: 100%;
+  text-align: start;
+}
+
+.add-student .drop-down > * {
+  text-align: start;
+  padding: 5px 20px;
+  cursor: pointer;
+}
+.add-student .drop-down > *:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.add-student .drop-down.hide {
+  display: none;
+}

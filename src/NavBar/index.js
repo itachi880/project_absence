@@ -62,6 +62,8 @@ function GSOptions() {
           set_notif_pop_up(!notif_pop_up);
         }}
       ></i>
+      <i onClick={() => Store.navigateTo("/groups/add")} className="fas fa-users" title="add group"></i>
+
       {notif_pop_up ? <NotificationTab /> : <></>}
     </div>
   );
