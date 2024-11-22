@@ -164,9 +164,22 @@ export const deleteGroup = async (token, group_id) => {
   if (!token || !group_id) return [true, null];
   const result = [null, null];
   await axios
-    .delete(getServerLink("groups/delete"), {group_id, token})
+    .delete(getServerLink("groups/delete"), {data:{group_id, token}})
     .then((res) => {
-      result[1] = res.data;
+      result[1]=res.data
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+  return result;
+};
+export const deleteUserById = async (token, student_id) => {
+  if (!token || !student_id) return [true, null];
+  const result = [null, null];
+  await axios
+    .delete(getServerLink("users/delete"), {data:{token, student_id}})
+    .then((res) => {
+      result[1]=res.data
     })
     .catch((e) => {
       result[0] = e;

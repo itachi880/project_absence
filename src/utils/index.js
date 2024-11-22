@@ -62,6 +62,7 @@ export function BarChart({
  *
  * @param {Object} props - The props for the component.
  * @param {Array<Object>} [props.data=[]] - The data to display in the table, where each object represents a row.
+ * @param {Array<string>} [props.nonClickableTd=[]] - The order of colmuns the default one is used if empty
  * @param {Array<string>} [props.order=[]] - The order of colmuns the default one is used if empty
  * @param {object} [props.replace_column_names={}] - An array of column names to exclude from the table.
  * @param {Array<string>} [props.exclude=[]] - An array of column names to exclude from the table.
@@ -81,7 +82,7 @@ export function BarChart({
  *
  * @returns {JSX.Element} - A JSX table element based on the provided JSON data.
  */
-export function TableByJson({ data = [], order = [], replace_column_names = {}, exclude = [], NoDataCompognent = () => <>no data</>, htmlProperties = { table: {}, thead: {}, tbody: {}, bodyTr: {}, headTr: {}, bodyTd: {}, headTd: {} }, dataTdsOnclick = (index, objectDataRow, event) => {} }) {
+export function TableByJson({ data = [], nonClickableTd=[],order = [], replace_column_names = {}, exclude = [], NoDataCompognent = () => <>no data</>, htmlProperties = { table: {}, thead: {}, tbody: {}, bodyTr: {}, headTr: {}, bodyTd: {}, headTd: {} }, dataTdsOnclick = (index, objectDataRow, event) => {} }) {
   if (data.length <= 0 || !Array.isArray(data)) return <NoDataCompognent />;
 
   const columns = [...new Set([...order, ...Object.keys(data[0]).filter((column) => !exclude.includes(column))]).values()];
@@ -101,7 +102,9 @@ export function TableByJson({ data = [], order = [], replace_column_names = {}, 
         {data.map((row, rowIndex) => (
           <tr key={rowIndex} {...htmlProperties.bodyTr}>
             {columns.map((column, index) => (
-              <td key={`${rowIndex}-${column}`} {...htmlProperties.bodyTd} onClick={(e) => dataTdsOnclick(index, row, e)}>
+              <td key={`${rowIndex}-${column}`} {...htmlProperties.bodyTd} onClick={(e) => {
+                if(nonClickableTd.includes(column)) return;
+              dataTdsOnclick(index, row, e)}}>
                 {row[column]}
               </td>
             ))}
@@ -112,18 +115,18 @@ export function TableByJson({ data = [], order = [], replace_column_names = {}, 
   );
 }
 export const spans = {
-  true: ({ text }) => (
-    <span className="true" style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--correct-color)", borderColor: " var(--correct-color)", backgroundColor: " var(--correct-color-background)" }}>
+  true: ({ text ,onClick=()=>{}}) => (
+    <span className="true" onClick={onClick}  style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--correct-color)", borderColor: " var(--correct-color)", backgroundColor: " var(--correct-color-background)" }}>
       {text}
     </span>
   ),
-  false: ({ text }) => (
-    <span className="false" style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--error-color)", borderColor: " var(--error-color)", backgroundColor: " var(--error-color-background)" }}>
+  false: ({ text ,onClick=()=>{}}) => (
+    <span className="false" onClick={onClick}  style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--error-color)", borderColor: " var(--error-color)", backgroundColor: " var(--error-color-background)" }}>
       {text}
     </span>
   ),
-  maybe: ({ text }) => (
-    <span className="false" style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)" }}>
+  maybe: ({ text,onClick=()=>{} }) => (
+    <span className="false" onClick={onClick} style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)",cursor:"pointer" }}>
       {text}
     </span>
   ),
