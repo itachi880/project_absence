@@ -54,11 +54,12 @@ export default function () {
       
           is_deleted: !group.is_deleted ? <spans.true text={"Active"} /> : <spans.false text={"archive"} />,
           study_year: group.study_year + "/" + (group.study_year + 1),
-          Delete:<button onClick={()=>{
-            console.log('hii')
-            deleteGroup(userData.token,group._id).then(console.log)
-          }}>Delete</button>
+          Delete:<spans.false text={'Delete' }   onClick={()=>{
+              deleteGroup(userData.token,group._id).then(console.log)
+          }}/>
         }))}
+        nonClickableTd={["Delete"]}
+
         exclude={["updatedAt", "__v", "createdAt", "_id"]}
         dataTdsOnclick={(index, obj, event) => {
           Store.navigateTo(`/users/show/group/${obj._id}`);

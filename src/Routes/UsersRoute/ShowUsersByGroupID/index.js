@@ -1,7 +1,7 @@
 import "./index.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getGroupByID, getUsersByGroupID } from "../../../api";
+import { deleteUserById, getGroupByID, getUsersByGroupID } from "../../../api";
 import { GroupsDataStore, jwt_token, loadingFlag, studentsByGroup, userDataStore } from "../../../data";
 import { PopUp, spans, TableByJson } from "../../../utils";
 import { Store } from "react-data-stores";
@@ -32,9 +32,13 @@ export default function () {
         data={
           studens[id]?.map((student) => {
             delete student.profile;
-            return { ...student, justification_days_left: student.justification_days_left + " jour", first_name: student.first_name + " " + student.last_name, group: groups.groups.filter((group) => group._id == id)[0]?.name, is_deleted: student.is_deleted ? spans["false"]({ text: "archived" }) : spans["true"]({ text: "active" }), displine_points: student.displine_points + "/20" };
+            return { ...student, justification_days_left: student.justification_days_left + " jour", first_name: student.first_name + " " + student.last_name, group: groups.groups.filter((group) => group._id == id)[0]?.name, is_deleted: student.is_deleted ? spans["false"]({ text: "archived" }) : spans["true"]({ text: "active" }), displine_points: student.displine_points + "/20" ,
+            delete:<spans.false text={'Delete' }   onClick={()=>{
+              deleteUserById(userData.token,student._id).then(console.log)
+          }}/>};
           }) || undefined
         }
+        nonClickableTd={["delete"]}
         exclude={["createdAt", "updatedAt", "__v", "_id", "absences", "role", "last_name"]}
         replace_column_names={{ is_deleted: "status", justification_days_left: "limite de certifi", first_name: "name", displine_points: "note dicipline" }}
         dataTdsOnclick={(index, obj, e) => {
