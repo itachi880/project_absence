@@ -135,8 +135,8 @@ export const spans = {
       {text}
     </span>
   ),
-  maybe: ({ text }) => (
-    <span className="false" style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)" }}>
+  maybe: ({ text, onClick = () => {} }) => (
+    <span className="false" onClick={onClick} style={{ padding: "5px 10px", fontWeight: "bold", fontFamily: "Arial, Helvetica, sans-serif", fontSize: "0.9rem", border: "2px solid", borderRadius: "5px", color: " var(--maybe-color)", borderColor: " var(--maybe-color)", backgroundColor: " var(--maybe-color-background)", cursor: "pointer" }}>
       {text}
     </span>
   ),
