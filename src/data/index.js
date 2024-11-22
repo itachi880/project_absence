@@ -74,7 +74,7 @@ export const roles = {
 export const statusCertif = { panding: "pending", valide: "validated", no_valide: "not validated" };
 export const jwt_token = "jwt_token";
 export const forbedenRoutesFor = {
-  [roles.etudient]: ["/groups"],
+  [roles.etudient]: ["/groups", "/users/add"],
   [roles.formateur]: ["/users/add"],
   [roles.generale_survience]: ["/admin"],
 };

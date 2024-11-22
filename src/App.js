@@ -2,7 +2,7 @@ import "./App.css";
 import NavBar from "./NavBar";
 import Login from "./Login";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { jwt_token, loadingFlag, userDataStore } from "./data";
+import { forbedenRoutesFor, jwt_token, loadingFlag, userDataStore } from "./data";
 import { useEffect } from "react";
 import { Store } from "react-data-stores";
 import { auth_token } from "./api";
@@ -28,10 +28,10 @@ function App() {
     const backLink = new URLSearchParams(window.location.search);
     if (backLink.get("backLink") == "/login") return Store.navigateTo("/");
     if (backLink.get("backLink")) Store.navigateTo(backLink.get("backLink"));
-    // if (forbedenRoutesFor[userData.data.role].includes(window.location.pathname)) {
-    //   Store.navigateTo("/");
-    //   return;
-    // }
+    if (forbedenRoutesFor[userData.data.role].includes(window.location.pathname)) {
+      Store.navigateTo("/");
+      return;
+    }
   }, [userData]);
   return (
     <div className="App">

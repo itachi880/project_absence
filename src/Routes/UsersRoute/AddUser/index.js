@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GroupsDataStore, jwt_token, loadingFlag, userDataStore } from "../../../data";
+import { GroupsDataStore, jwt_token, loadingFlag, roles, userDataStore } from "../../../data";
 import { addStudent, getGroups } from "../../../api/index";
 import { searchGroupsByName } from "../../../api/index";
 import "./index.css";
@@ -11,6 +11,7 @@ export default function () {
     last_name: "",
     cin: "",
     group: "",
+    role: roles.etudient,
   });
   const [userData, setUserData] = userDataStore.useStore();
   const [loading, setLoadingFlag] = loadingFlag.useStore();
@@ -23,11 +24,11 @@ export default function () {
   const handleSearch = async (value) => {
     if (value.trim().length < 2) return;
     setFetchFlag(true);
-    const result = search[search.keys.find((key) => value.toLowerCase().trim().includes(key.toLocaleLowerCase()))]?.filter((obj) => obj.name.toLowerCase().includes(value.toLowerCase())) || [];
+    const result = search[search.keys.find((key) => value.toLowerCase().trim().includes(key.toLocaleLowerCase()))]?.filter((obj) => obj.name.toLowerCase().includes(value.toLowerCase()) && !obj.is_deleted) || [];
 
     if (result.length > 0) {
       console.log("Search results local:", result);
-      setCurrentSearch(result.map((e) => ({ name: e.name, _id: e._id })));
+      setCurrentSearch(result.filter((res) => !res.is_deleted).map((e) => ({ name: e.name, _id: e._id })));
       setFetchFlag(false);
       return;
     }
@@ -40,7 +41,7 @@ export default function () {
     }
     setSearch({ ...search, [value.toLowerCase().trim()]: data, keys: [...search.keys, value.toLowerCase().trim()] });
     console.log("Search results server:", data);
-    setCurrentSearch(data.map((e) => ({ name: e.name, _id: e._id })));
+    setCurrentSearch(data.filter((e) => !e.is_deleted).map((e) => ({ name: e.name, _id: e._id })));
 
     setFetchFlag(false);
   };
@@ -64,9 +65,9 @@ export default function () {
 
   return (
     <div className="add-student">
-      <div>
+      <div style={{ marginBottom: "20px" }}>
         <span className="error" ref={inputsControle.error_message_info}></span>
-        <h1>inscription</h1>
+        <h1>add user</h1>
       </div>
       <div className="form">
         <div className="input">
@@ -106,30 +107,50 @@ export default function () {
             }}
           />
         </div>
-        <div className="input">
-          <span className={`input-titel ${formData.group.trim().length > 0 ? "input-full" : ""}`}>group</span>
-
-          <input
-            type="text"
-            onChange={async (e) => {
-              await handleSearch(e.target.value);
-              setFormData({ ...formData, group: currentSearch[0]._id });
+        <div className="input select">
+          <RoleSelect
+            options={Object.entries(roles).map((e) => {
+              e[0] = e[0].replaceAll("_", " ");
+              return e;
+            })}
+            onChange={(e) => {
+              setFormData({ ...formData, role: e });
             }}
-            list="currentsearch"
+            select_innerHtml="etudient"
           />
         </div>
-        <datalist id="currentsearch">
-          {currentSearch.map((e) => (
-            <option>{e.name}</option>
-          ))}
-        </datalist>
+        {formData.role == roles.etudient ? (
+          <>
+            <div className="input">
+              <span className={`input-titel`}>group</span>
+
+              <input
+                type="text"
+                onChange={async (e) => {
+                  if (e.target.value.trim().length > 0) e.target.previousSibling?.classList?.add("input-full");
+                  else e.target.previousSibling?.classList?.remove("input-full");
+                  await handleSearch(e.target.value);
+                  setFormData({ ...formData, group: currentSearch[0]._id });
+                }}
+                list="currentsearch"
+              />
+            </div>
+            <datalist id="currentsearch">
+              {currentSearch.map((e) => (
+                <option>{e.name}</option>
+              ))}
+            </datalist>
+          </>
+        ) : (
+          ""
+        )}
         <input
           type="submit"
           onClick={() => {
-            if (formData.login?.trim()?.length < 3 || formData.cin?.trim()?.length < 3 || formData.first_name?.trim()?.length < 3 || formData.last_name?.trim()?.length < 3 || formData.group?.trim()?.length < 3) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required and password must contains minimum of 4 characters");
+            console.log(formData);
+            if (formData.login?.trim()?.length < 3 || formData.cin?.trim()?.length < 3 || formData.first_name?.trim()?.length < 3 || formData.last_name?.trim()?.length < 3 || (formData.group?.trim()?.length < 3 && formData.role == roles.etudient)) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required");
             setLoadingFlag({ state: true });
-
-            addStudent(formData.first_name, formData.last_name, formData.cin, formData.login, formData.group, userData.token)
+            addStudent(formData.first_name, formData.last_name, formData.cin, formData.login, formData.group, formData.role, userData.token)
               .then(console.log)
               .then(() => setLoadingFlag({ state: false }));
           }}
@@ -138,5 +159,38 @@ export default function () {
         />
       </div>
     </div>
+  );
+}
+function RoleSelect({
+  options = [["key", "value"]],
+  onChange = (e) => {
+    console.log("change event not initialized value:" + e);
+  },
+  select_innerHtml = "select option",
+}) {
+  return (
+    <>
+      <div
+        className="selected-option"
+        onClick={(e) => {
+          e.target.parentElement.classList.toggle("active");
+          e.target.nextSibling.classList.toggle("hide");
+        }}
+      >
+        {select_innerHtml}
+      </div>
+      <ul className="drop-down hide">
+        {options.map((e) => (
+          <li
+            onClick={(event) => {
+              onChange(e[1]);
+              event.target.parentElement.parentElement.childNodes[0].innerHTML = e[0];
+            }}
+          >
+            {e[0]}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }

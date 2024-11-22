@@ -120,11 +120,11 @@ export const getJustificationByID = async (id, token) => {
     });
   return result;
 };
-export const addStudent = async (first_name, last_name, cin, login, group, token) => {
+export const addStudent = async (first_name, last_name, cin, login, group, role, token) => {
   if (!token) return [true, null];
   const result = [null, null];
   await axios
-    .post(getServerLink("users/add"), { first_name, last_name, cin, login, group, token, password: cin })
+    .post(getServerLink("users/add"), { first_name, last_name, cin, login, group, token, role, password: cin })
     .then((res) => {
       result[1] = res.data;
     })
@@ -138,6 +138,20 @@ export const searchGroupsByName = async (query) => {
   const result = [null, null];
   await axios
     .get(getServerLink("groups/searchGroups"), { params: { query } })
+    .then((res) => {
+      result[1] = res.data;
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+  return result;
+};
+export const AddGroup = async (name, token, studyYear) => {
+  if (!token || !name || !studyYear) return [true, null];
+  const result = [null, null];
+  console.log();
+  await axios
+    .post(getServerLink("groups/add"), { study_year: studyYear, name, token })
     .then((res) => {
       result[1] = res.data;
     })
