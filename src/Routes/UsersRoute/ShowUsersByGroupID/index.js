@@ -30,13 +30,36 @@ export default function () {
     <div className="table-container">
       <TableByJson
         data={
-          studens[id]?.map((student) => {
-            delete student.profile;
-            return { ...student, justification_days_left: student.justification_days_left + " jour", first_name: student.first_name + " " + student.last_name, group: groups.groups.filter((group) => group._id == id)[0]?.name, is_deleted: student.is_deleted ? spans["false"]({ text: "archived" }) : spans["true"]({ text: "active" }), displine_points: student.displine_points + "/20" ,
-            delete:<spans.false text={'Delete' }   onClick={()=>{
-              deleteUserById(userData.token,student._id).then(console.log)
-          }}/>};
-          }) || undefined
+          studens[id]
+            ?.filter((e) => e.is_deleted == false)
+            ?.map((student) => {
+              delete student.profile;
+              return {
+                ...student,
+                justification_days_left: student.justification_days_left + " jour",
+                first_name: student.first_name + " " + student.last_name,
+                group: groups.groups.filter((group) => group._id == id)[0]?.name,
+                is_deleted: student.is_deleted ? spans["false"]({ text: "archived" }) : spans["true"]({ text: "active" }),
+                displine_points: student.displine_points + "/20",
+                delete: (
+                  <spans.false
+                    text={<i className="fa-solid fa-trash-can"></i>}
+                    onClick={() => {
+                      setLoadingFlag({ state: true });
+                      deleteUserById(userData.token, student._id).then((res) => {
+                        setLoadingFlag({ state: false });
+                        if (res[0]) return console.warn(res[0]);
+                        if (res[1] !== 200) return console.warn(res[1]);
+                        studens[student.group][studens[student.group].findIndex((e) => e._id == student._id)].is_deleted = true;
+                        setStudents({
+                          [student.group]: [...studens[student.group]],
+                        });
+                      });
+                    }}
+                  />
+                ),
+              };
+            }) || undefined
         }
         nonClickableTd={["delete"]}
         exclude={["createdAt", "updatedAt", "__v", "_id", "absences", "role", "last_name"]}
