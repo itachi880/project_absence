@@ -160,3 +160,16 @@ export const AddGroup = async (name, token, studyYear) => {
     });
   return result;
 };
+export const deleteGroup = async (token, group_id) => {
+  if (!token || !group_id) return [true, null];
+  const result = [null, null];
+  await axios
+    .delete(getServerLink("groups/delete"), {group_id, token})
+    .then((res) => {
+      result[1] = res.data;
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+  return result;
+};
