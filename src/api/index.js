@@ -186,3 +186,29 @@ export const deleteUserById = async (token, student_id) => {
     });
   return result;
 };
+export const undoGroupDelete = async (token, group_id) => {
+  if (!token || !group_id) return [true, null];
+  const result = [null, null];
+  await axios
+    .put(getServerLink("groups/undo/delete"), { token, group_id } )
+    .then((res) => {
+      result[1] = res.status;
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+  return result;
+};
+export const undoUserDelete = async (token, student_id) => {
+  if (!token || !student_id) return [true, null];
+  const result = [null, null];
+  await axios
+    .put(getServerLink("users/undo/delete"), { token, student_id } )
+    .then((res) => {
+      result[1] = res.status;
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+  return result;
+};
