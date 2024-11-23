@@ -1,7 +1,7 @@
 import "./index.css";
 import { spans, TableByJson } from "../../../utils";
 import { useEffect, useState } from "react";
-import { deleteGroup, getGroups } from "../../../api";
+import { deleteGroup, getGroups, undoGroupDelete } from "../../../api";
 import { forbedenRoutesFor, GroupsDataStore, loadingFlag, userDataStore } from "../../../data";
 import { Store } from "react-data-stores";
 
@@ -49,7 +49,7 @@ export default function () {
       </button>
       <TableByJson
         replace_column_names={{ is_deleted: "status", study_year: "study years" }}
-        data={groups.groups.map((group) => ({
+        data={groups.groups.filter(e=>e.is_deleted==getArchived).map((group) => ({
           ...group,
 
           is_deleted: !group.is_deleted ? <spans.true text={"Active"} /> : <spans.false text={"archive"} />,
@@ -73,11 +73,17 @@ export default function () {
                     false
                   );
                 });
+
+
               }}
             />
           ),
+          reset:<spans.true onClick={
+           ()=> undoGroupDelete(userData.token,group._id).then(console.log)
+          }
+           text={<i className="fa-solid fa-rotate-left"></i>}/>
         }))}
-        nonClickableTd={["Delete"]}
+        nonClickableTd={["Delete",'reset']}
         exclude={["updatedAt", "__v", "createdAt", "_id"]}
         dataTdsOnclick={(index, obj, event) => {
           Store.navigateTo(`/users/show/group/${obj._id}`);
