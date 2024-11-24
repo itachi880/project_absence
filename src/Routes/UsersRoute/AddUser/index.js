@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GroupsDataStore, jwt_token, loadingFlag, roles, userDataStore } from "../../../data";
+import { GroupsDataStore, loadingFlag, roles, studentsByGroup, userDataStore } from "../../../data";
 import { addStudent, getGroups } from "../../../api/index";
 import { searchGroupsByName } from "../../../api/index";
 import "./index.css";
@@ -15,6 +15,7 @@ export default function () {
   });
   const [userData, setUserData] = userDataStore.useStore();
   const [loading, setLoadingFlag] = loadingFlag.useStore();
+  const [studentsStore, setStudentsStoreData] = studentsByGroup.useStore();
   const inputsControle = {
     error_message_info: useRef(""),
   };
@@ -24,7 +25,7 @@ export default function () {
   const handleSearch = async (value) => {
     if (value.trim().length < 2) return;
     setFetchFlag(true);
-    const result = search[search.keys.find((key) => value.toLowerCase().trim().includes(key.toLocaleLowerCase()))]?.filter((obj) => obj.name.toLowerCase().includes(value.toLowerCase()) && !obj.is_deleted) || [];
+    const result = search[search.keys.find((key) => value.toLowerCase().trim().includes(key.toLowerCase()))]?.filter((obj) => obj.name.toLowerCase().includes(value.toLowerCase()) && !obj.is_deleted) || [];
 
     if (result.length > 0) {
       console.log("Search results local:", result);
@@ -46,20 +47,30 @@ export default function () {
     setFetchFlag(false);
   };
   useEffect(() => {
-    getGroups(userData.token, false).then((res) => {
-      if (res[0]) return;
-      const exist = [];
-      setGroups(
-        {
-          groups: [...res[1].groups, ...groups.groups].filter((group) => {
-            if (!exist.includes(group._id)) {
-              exist.push(group._id);
-              return true;
-            }
-          }),
-        },
-        false
-      );
+    if (groups.groups.length < 0)
+      getGroups(userData.token, false).then((res) => {
+        if (res[0]) return;
+        const exist = [];
+        setGroups(
+          {
+            groups: [...res[1].groups, ...groups.groups].filter((group) => {
+              if (!exist.includes(group._id)) {
+                exist.push(group._id);
+                return true;
+              }
+            }),
+          },
+          false
+        );
+      });
+    groups.groups.forEach((group) => {
+      const groupShortName = (group.name[0] + group.name[1]).toLowerCase();
+      if (search.keys.includes(groupShortName)) {
+        if (search[groupShortName].filter((e) => e._id == group._id).length == 0) search[groupShortName].push(group);
+        return;
+      }
+      search.keys.push(groupShortName);
+      search[groupShortName] = [group];
     });
   }, []);
 
@@ -117,7 +128,9 @@ export default function () {
               setFormData({ ...formData, role: e });
             }}
             select_innerHtml="etudient"
-          />
+          >
+            <span className={`input-titel ${formData.role.trim().length > 0 ? "input-full" : ""}`}>{"user type"}</span>
+          </RoleSelect>
         </div>
         {formData.role == roles.etudient ? (
           <>
@@ -147,11 +160,16 @@ export default function () {
         <input
           type="submit"
           onClick={() => {
-            console.log(formData);
+            console.log(formData, studentsStore);
             if (formData.login?.trim()?.length < 3 || formData.cin?.trim()?.length < 3 || formData.first_name?.trim()?.length < 3 || formData.last_name?.trim()?.length < 3 || (formData.group?.trim()?.length < 3 && formData.role == roles.etudient)) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required");
             setLoadingFlag({ state: true });
             addStudent(formData.first_name, formData.last_name, formData.cin, formData.login, formData.group, formData.role, userData.token)
-              .then(console.log)
+              .then((res) => {
+                if (res[0]) return alert("user not added");
+                if (studentsStore[formData.group]?.length) setStudentsStoreData({ [formData.group]: [...studentsStore[formData.group], { ...formData, _id: res[1]._id }] });
+                else setStudentsStoreData({ [formData.group]: [{ ...formData, _id: res[1]._id }] });
+                console.log(studentsStore);
+              })
               .then(() => setLoadingFlag({ state: false }));
           }}
           value="add"
@@ -167,9 +185,11 @@ function RoleSelect({
     console.log("change event not initialized value:" + e);
   },
   select_innerHtml = "select option",
+  children = "",
 }) {
   return (
     <>
+      {children}
       <div
         className="selected-option"
         onClick={(e) => {
@@ -184,7 +204,7 @@ function RoleSelect({
           <li
             onClick={(event) => {
               onChange(e[1]);
-              event.target.parentElement.parentElement.childNodes[0].innerHTML = e[0];
+              event.target.parentElement.parentElement.childNodes[1].innerHTML = e[0];
             }}
           >
             {e[0]}
