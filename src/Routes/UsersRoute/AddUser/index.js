@@ -160,7 +160,6 @@ export default function () {
         <input
           type="submit"
           onClick={() => {
-            console.log(formData, studentsStore);
             if (formData.login?.trim()?.length < 3 || formData.cin?.trim()?.length < 3 || formData.first_name?.trim()?.length < 3 || formData.last_name?.trim()?.length < 3 || (formData.group?.trim()?.length < 3 && formData.role == roles.etudient)) return (inputsControle.error_message_info.current.innerHTML = "all fealds are required");
             setLoadingFlag({ state: true });
             addStudent(formData.first_name, formData.last_name, formData.cin, formData.login, formData.group, formData.role, userData.token)
@@ -168,7 +167,6 @@ export default function () {
                 if (res[0]) return alert("user not added");
                 if (studentsStore[formData.group]?.length) setStudentsStoreData({ [formData.group]: [...studentsStore[formData.group], { ...formData, _id: res[1]._id }] });
                 else setStudentsStoreData({ [formData.group]: [{ ...formData, _id: res[1]._id }] });
-                console.log(studentsStore);
               })
               .then(() => setLoadingFlag({ state: false }));
           }}

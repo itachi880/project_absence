@@ -15,10 +15,17 @@ export default function () {
       Store.navigateTo("/");
       return;
     }
+  }, []);
+  useEffect(() => {
+    if (groups[!getArchived ? "finish" : "finishDeleted"]) return;
     setLoadingFlag({ state: true });
-    if (groups.groups.length > 1) return setLoadingFlag({ state: false });
-    getGroups(userData.token, false, 0).then((res) => {
-      if (res[0]) return;
+    getGroups(userData.token, getArchived, !getArchived ? groups.pageCount : groups.pageCountDeleted).then((res) => {
+      if (res[0]) return setLoadingFlag({ state: false });
+      if (res[1].groups.length == 0) {
+        setLoadingFlag({ state: false });
+        !getArchived ? setGroups({ finish: true }, false) : setGroups({ finishDeleted: true }, false);
+        return;
+      }
       const exestingOnes = [];
       setGroups(
         {
@@ -29,14 +36,13 @@ export default function () {
             }
             return false;
           }),
-          pageCount: groups.pageCount + 1,
+          [!getArchived ? "pageCount" : "pageCountDeleted"]: groups[!getArchived ? "pageCount" : "pageCountDeleted"] + 1,
         },
         false
       );
       setLoadingFlag({ state: false });
     });
-  }, []);
-
+  }, [getArchived]);
   return (
     <div className="table_container">
       <button
