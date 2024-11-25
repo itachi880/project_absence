@@ -116,9 +116,7 @@ li {
   overflow-x: hidden;
   overflow-y: auto;
 }
-.add-student .input.select {
-  padding: 15px 20px;
-}
+
 .add-student .input.select.active {
   border-color: var(--primary-bleu);
   outline: 2px solid var(--primary-bleu);
@@ -126,6 +124,7 @@ li {
 .add-student .selected-option {
   width: 100%;
   text-align: start;
+  padding: 15px 20px;
 }
 
 .add-student .drop-down > * {

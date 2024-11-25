@@ -22,6 +22,7 @@ export const GroupsDataStore = createStore({
   pageCount: 0,
   pageCountDeleted: 0,
   finish: false,
+  finishDeleted: false,
 });
 export const studentsByGroup = createStore({
   id: [
