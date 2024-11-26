@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { GroupsDataStore, jwt_token, loadingFlag, roles, userDataStore } from "../../../data";
-import { AddGroup, addStudent, getGroups } from "../../../api/index";
-import { searchGroupsByName } from "../../../api/index";
+import { GroupsDataStore, loadingFlag, userDataStore } from "../../../data";
+import { AddGroup, getGroups } from "../../../api/index";
 import { Store } from "react-data-stores";
 export default function () {
   const [groups, setGroups] = GroupsDataStore.useStore();
@@ -14,33 +13,7 @@ export default function () {
   const inputsControle = {
     error_message_info: useRef(""),
   };
-  const [search, setSearch] = useState({ na: [], keys: ["na"] }); //de:[{},{}],keys:["de","id"],id:[{},{}]
-  const [currentSearch, setCurrentSearch] = useState([{ name: "", _id: "" }]);
-  const [fetchFlag, setFetchFlag] = useState(false);
-  const handleSearch = async (value) => {
-    if (value.trim().length < 2) return;
-    setFetchFlag(true);
-    const result = search[search.keys.find((key) => value.toLowerCase().trim().includes(key.toLocaleLowerCase()))]?.filter((obj) => obj.name.toLowerCase().includes(value.toLowerCase()) && !obj.is_deleted) || [];
 
-    if (result.length > 0) {
-      console.log("Search results local:", result);
-      setCurrentSearch(result.filter((res) => !res.is_deleted).map((e) => ({ name: e.name, _id: e._id })));
-      setFetchFlag(false);
-      return;
-    }
-    const [error, data] = await searchGroupsByName(value);
-
-    if (error) {
-      setFetchFlag(false);
-      console.error("Error searching groups:", error);
-      return;
-    }
-    setSearch({ ...search, [value.toLowerCase().trim()]: data, keys: [...search.keys, value.toLowerCase().trim()] });
-    console.log("Search results server:", data);
-    setCurrentSearch(data.filter((e) => !e.is_deleted).map((e) => ({ name: e.name, _id: e._id })));
-
-    setFetchFlag(false);
-  };
   useEffect(() => {
     getGroups(userData.token, false).then((res) => {
       if (res[0]) return;
