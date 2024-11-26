@@ -143,7 +143,7 @@ export default function () {
                   if (e.target.value.trim().length > 0) e.target.previousSibling?.classList?.add("input-full");
                   else e.target.previousSibling?.classList?.remove("input-full");
                   await handleSearch(e.target.value);
-                  setFormData({ ...formData, group: currentSearch[0]._id });
+                  setFormData({ ...formData, group: currentSearch[0]?._id });
                 }}
                 list="currentsearch"
               />
