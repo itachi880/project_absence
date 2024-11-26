@@ -1,19 +1,19 @@
-table thead th {
+.show_groups table thead th {
   padding: 5px 10px;
   background-color: #f6f7f8;
   color: #5f6368;
 }
 
-table {
+.show_groups table {
   background-color: #a7a7a7;
   text-align: start;
   text-transform: capitalize;
 }
 
-table td {
+.show_groups table td {
   background-color: #ffffff;
 }
-td,
-th {
+.show_groups td,
+.show_groups th {
   padding: 10px;
 }

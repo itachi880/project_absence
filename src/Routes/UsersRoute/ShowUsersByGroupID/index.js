@@ -2,15 +2,14 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { deleteUserById, getGroupByID, getUsersByGroupID, undoUserDelete } from "../../../api";
-import { GroupsDataStore, jwt_token, loadingFlag, studentsByGroup, userDataStore } from "../../../data";
-import { PopUp, spans, TableByJson } from "../../../utils";
+import { GroupsDataStore, loadingFlag, studentsByGroup, userDataStore } from "../../../data";
+import { spans, TableByJson } from "../../../utils";
 import { Store } from "react-data-stores";
 export default function () {
   const { id } = useParams();
   const [groups, setGroups] = GroupsDataStore.useStore();
   const [userData, setUserData] = userDataStore.useStore();
   const [studens, setStudents] = studentsByGroup.useStore();
-  const [isDataLoaded, setDataLoadedFlag] = useState(false);
   const [loading, setLoadingFlag] = loadingFlag.useStore();
   const [getArchived, setFlagGetArchived] = useState(false);
   useEffect(() => {
@@ -28,13 +27,14 @@ export default function () {
     });
   }, []);
   return (
-    <>
+    <div className="show_users_by_group">
       <button
+        className="archive-btn"
         onClick={() => {
           setFlagGetArchived((prev) => !prev);
         }}
       >
-        deleted users {getArchived ? "enable" : "disable"}
+        affiche les etudient supprime <span className={`${getArchived ? "deleted" : "non-deleted"}`}></span>
       </button>
       <div className="table-container">
         <TableByJson
@@ -84,10 +84,18 @@ export default function () {
                       text={<i className="fa-solid fa-rotate-left"></i>}
                     ></spans.true>
                   ),
+                  update: (
+                    <spans.true
+                      onClick={() => {
+                        Store.navigateTo(`/users/update/${student._id}`);
+                      }}
+                      text={<i className="fa-solid fa-pen-to-square"></i>}
+                    ></spans.true>
+                  ),
                 };
               }) || undefined
           }
-          nonClickableTd={["delete", "reset"]}
+          nonClickableTd={["delete", "reset", "update"]}
           exclude={["createdAt", "updatedAt", "__v", "_id", "absences", "role", "last_name"]}
           replace_column_names={{ is_deleted: "status", justification_days_left: "limite de certifi", first_name: "name", displine_points: "note dicipline" }}
           dataTdsOnclick={(index, obj, e) => {
@@ -96,6 +104,6 @@ export default function () {
           order={["first_name", "login", "is_deleted", "group", "cin", "justification_days_left", "displine_points"]}
         />
       </div>
-    </>
+    </div>
   );
 }

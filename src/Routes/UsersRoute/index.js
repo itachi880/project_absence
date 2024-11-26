@@ -13,6 +13,7 @@ export default function () {
       <Route path="/add" element={<AddUser />} />
       <Route path="/show/group/:id" element={<ShowUsersByGroupID />} />
       <Route path="/show/:id/from/:group" element={<ShowUserByID />} />
+      <Route path="*" element={<>not found /users</>} />
     </Routes>
   );
 }

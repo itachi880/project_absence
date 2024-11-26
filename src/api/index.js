@@ -190,7 +190,7 @@ export const undoGroupDelete = async (token, group_id) => {
   if (!token || !group_id) return [true, null];
   const result = [null, null];
   await axios
-    .put(getServerLink("groups/undo/delete"), { token, group_id } )
+    .put(getServerLink("groups/undo/delete"), { token, group_id })
     .then((res) => {
       result[1] = res.status;
     })
@@ -203,8 +203,22 @@ export const undoUserDelete = async (token, student_id) => {
   if (!token || !student_id) return [true, null];
   const result = [null, null];
   await axios
-    .put(getServerLink("users/undo/delete"), { token, student_id } )
+    .put(getServerLink("users/undo/delete"), { token, student_id })
     .then((res) => {
+      result[1] = res.status;
+    })
+    .catch((e) => {
+      result[0] = e;
+    });
+  return result;
+};
+export const updateGroupe = async (token, group_id, updated_data) => {
+  if (!token || !group_id || Object.keys(updated_data).length == 0) return [true, null];
+  const result = [null, null];
+  await axios
+    .put(getServerLink("groups/update"), { token, group_id, updated_data })
+    .then((res) => {
+      console.log(res);
       result[1] = res.status;
     })
     .catch((e) => {
