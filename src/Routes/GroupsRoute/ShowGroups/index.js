@@ -84,8 +84,9 @@ export default function () {
               />
             ),
             reset: <spans.true onClick={() => undoGroupDelete(userData.token, group._id).then(console.log)} text={<i className="fa-solid fa-rotate-left"></i>} />,
+            update:<button>update</button>
           }))}
-        nonClickableTd={["Delete", "reset"]}
+        nonClickableTd={["Delete", "reset",'update']}
         exclude={["updatedAt", "__v", "createdAt", "_id"]}
         dataTdsOnclick={(index, obj, event) => {
           Store.navigateTo(`/users/show/group/${obj._id}`);
