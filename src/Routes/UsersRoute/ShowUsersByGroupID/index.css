@@ -107,46 +107,42 @@
 
 .student-info-details {
   display: flex;
-  flex-direction: column;
+  justify-self: center;
   gap: 10px;
+  cursor: pointer;
 }
 
-.student-info-item {
-  font-size: 1rem;
-  color: #555;
+.show_users_by_group > button span {
+  display: block;
+  width: 40px;
+  height: 20px;
+  background-color: black;
+  border-radius: 20px;
 }
 
-.student-info-item strong {
-  color: #333;
+.show_users_by_group > button span.non-deleted {
+  background-color: var(--error-color);
 }
-.student-info-container {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 20px auto;
-}
-
-.student-info-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15px;
-  text-align: center;
+.show_users_by_group > button span::before {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  position: relative;
+  content: "";
+  display: block;
+  border-radius: 50%;
 }
 
-.student-info-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.show_users_by_group > button span.deleted {
+  background-color: var(--correct-color);
 }
 
-.student-info-item {
-  font-size: 1rem;
-  color: #555;
+.show_users_by_group > button span.non-deleted::before {
+  right: calc(-100% + 18px);
+  top: 2.5px;
 }
 
-.student-info-item strong {
-  color: #333;
+.show_users_by_group > button span.deleted::before {
+  left: calc(0% + 2px);
+  top: 2.5px;
 }
