@@ -22,6 +22,7 @@ export default function () {
     setLoadingFlag({ state: true });
     getGroups(userData.token, getArchived, !getArchived ? groups.pageCount : groups.pageCountDeleted).then((res) => {
       if (res[0]) return setLoadingFlag({ state: false });
+      console.log(res);
       if (res[1].groups.length == 0) {
         setLoadingFlag({ state: false });
         !getArchived ? setGroups({ finish: true }, false) : setGroups({ finishDeleted: true }, false);

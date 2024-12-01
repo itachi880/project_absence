@@ -312,3 +312,41 @@
 .validate-button:nth-child(2) {
   background-color: var(--error-color);
 }
+
+.show-user-by-id .absence_table thead th {
+  padding: 5px 10px;
+  background-color: #f6f7f8;
+  color: #5f6368;
+  text-transform: capitalize;
+}
+
+.show-user-by-id .absence_table {
+  background-color: #a7a7a7;
+  text-align: start;
+  overflow-x: auto;
+  text-transform: lowercase;
+  width: 100%;
+  min-width: 910px;
+  max-width: 1050px;
+}
+
+.show-user-by-id .absence_table td {
+  background-color: #ffffff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.show-user-by-id .absence_table td,
+.show-user-by-id .absence_table th {
+  padding: 10px;
+}
+.show-user-by-id .absence_table td span {
+  padding: 5px 10px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
+  color: white;
+  border: 2px solid;
+  border-radius: 5px;
+}

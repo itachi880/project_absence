@@ -7,7 +7,6 @@ import "./index.css";
 import { absences, GroupsDataStore, justificationsStore, jwt_token, loadingFlag, roles, statusCertif, studentsByGroup, userDataStore } from "../../../data";
 import { getGroupByID, getJustificationByID, getUserAbsenceByID, getUsersByGroupID } from "../../../api";
 import { spans } from "../../../utils";
-import { Store } from "react-data-stores";
 
 export default function () {
   const date = new Date();
@@ -108,7 +107,7 @@ export default function () {
           }}
         />
       </div>
-      <table>
+      <table className="absence_table">
         <thead>
           <tr>
             <th>Horaire</th>
