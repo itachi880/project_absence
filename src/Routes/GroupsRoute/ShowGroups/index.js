@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import { deleteGroup, getGroups, undoGroupDelete } from "../../../api";
 import { forbedenRoutesFor, GroupsDataStore, loadingFlag, studentsByGroup, userDataStore } from "../../../data";
 import { Store } from "react-data-stores";
-
+let canSearch = true;
+let searchString = "";
 export default function () {
   const [userData, setUserData] = userDataStore.useStore();
   const [groups, setGroups] = GroupsDataStore.useStore();
   const [studentsStore, setStudentsStoreData] = studentsByGroup.useStore();
   const [loading, setLoadingFlag] = loadingFlag.useStore();
   const [getArchived, setFlagGetArchived] = useState(false);
+  const [toTableRender, setTableTorender] = useState([]);
+  const [searchData, setSearchData] = useState([]);
   useEffect(() => {
     if (forbedenRoutesFor[userData.data.role]?.includes("/groups")) {
       Store.navigateTo("/");
@@ -45,9 +48,34 @@ export default function () {
       setLoadingFlag({ state: false });
     });
   }, [getArchived]);
+
   useEffect(() => {
-    console.log(studentsStore, groups);
+    setSearchData(
+      groups.groups.map((e, i) => ({
+        index: i,
+        keys: Object.values(e).map((e) => {
+          if (typeof e == "boolean") return "";
+          if (typeof e == "number") return e + "/" + (e + 1);
+          return e.toLowerCase();
+        }),
+      }))
+    );
+    console.log(searchData);
   }, [studentsStore, groups.groups]);
+  function handleTableSearch(searchQuery) {
+    if (searchQuery.trim().length == 0) return setTableTorender([]);
+    if (!canSearch) return;
+    const indexes = [];
+    const searchPaterns = searchQuery.split(" ").filter((e) => e.trim().length != 0);
+    searchData.forEach((group) => {
+      group.keys.forEach((key) => {
+        if (searchPaterns.filter((pattern) => key.includes(pattern.toLowerCase())).length > 0 && !indexes.includes(group.index)) {
+          indexes.push(group.index);
+        }
+      });
+    });
+    setTableTorender(indexes.map((index) => groups.groups[index]));
+  }
   return (
     <div className="show_groups">
       <div className="table_container">
@@ -59,11 +87,24 @@ export default function () {
         >
           see Archive {getArchived ? "enable" : "disable"}
         </button>
+        <div className="table-input">
+          {<i className="fa-solid fa-magnifying-glass search-icon"></i>}
+          <input type="text" placeholder="Search" />
+          <spans.true
+            onClick={(e) => {
+              e = e.currentTarget.previousElementSibling;
+              searchString = e.value;
+              handleTableSearch(e.value);
+            }}
+            text={<p className="">OK</p>}
+          />
+        </div>
+
         <TableByJson
           replace_column_names={{ is_deleted: "status", study_year: "study years" }}
-          data={groups.groups
+          data={(searchString.trim().length == 0 ? groups.groups : toTableRender.length > 0 ? toTableRender : []) //reason is the [] will result in nodatacomponent to render because it has no elements
             .filter((e) => e.is_deleted == getArchived)
-            .map((group, indexGroup) => ({
+            .map((group) => ({
               ...group,
               is_deleted: !group.is_deleted ? <spans.true text={"Active"} /> : <spans.false text={"archive"} />,
               study_year: group.study_year + "/" + (group.study_year + 1),
@@ -131,7 +172,7 @@ export default function () {
             }))}
           nonClickableTd={["Delete", "reset", "update"]}
           exclude={["updatedAt", "__v", "createdAt", "_id"]}
-          dataTdsOnclick={(index, obj, event) => {
+          dataTdsOnclick={(index, obj) => {
             Store.navigateTo(`/users/show/group/${obj._id}`);
           }}
         />

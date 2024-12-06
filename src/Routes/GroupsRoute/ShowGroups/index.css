@@ -17,3 +17,31 @@
 .show_groups th {
   padding: 10px;
 }
+.show_groups .table-input {
+  width: 100%;
+  aspect-ratio: 14/1;
+  border: 2px solid var(--nav-black-shadow);
+  border-radius: 2px;
+  display: grid;
+  grid-template-areas: "SI INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT INPUT   FILTERS";
+  margin: 10px 0;
+  padding: 2px 10px;
+}
+
+.show_groups .table-input input {
+  border: none;
+  outline: none;
+  text-align: start;
+  grid-area: INPUT;
+  background-color: transparent;
+}
+.show_groups .table-input i {
+  text-align: center;
+  align-content: center;
+}
+.show_groups .table-input .filter-icon {
+  grid-area: FILTERS;
+}
+.show_groups .table-input .search-icon {
+  grid-area: SI;
+}
