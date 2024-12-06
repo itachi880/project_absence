@@ -107,8 +107,6 @@ export default function () {
           }}
         />
       </div>
-
-      <table>
       <table className="absence_table">
         <thead>
           <tr>
