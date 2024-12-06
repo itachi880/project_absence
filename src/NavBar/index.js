@@ -63,10 +63,3 @@ function FROptions() {
 
   return <div className={"section rigth"}>fr</div>;
 }
-function NotificationTab() {
-  return (
-    <>
-      <div className="notification_pop_up">notification de certefica</div>
-    </>
-  );
-}
